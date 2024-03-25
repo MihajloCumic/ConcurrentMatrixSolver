@@ -1,5 +1,7 @@
 package finder;
 
+import queue.TaskQueue;
+import queue.impl.TaskQueueImpl;
 import system.explorer.creator.TaskCreator;
 import system.explorer.finder.FileFinder;
 
@@ -12,7 +14,8 @@ import java.util.stream.Stream;
 
 public class FIleFinderTest {
     public static void main(String[] args) {
-        TaskCreator taskCreator = new TaskCreator();
+        TaskQueue taskQueue = new TaskQueueImpl();
+        TaskCreator taskCreator = new TaskCreator(taskQueue);
         FileFinder fileFinder = new FileFinder("/home/cuma/Fakultet/letnji-semestar/konkurenti-distribuirani/kids-test", ".rix", taskCreator);
         fileFinder.findFiles();
         List<Path> files = taskCreator.getFiles();

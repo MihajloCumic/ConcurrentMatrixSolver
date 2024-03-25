@@ -22,4 +22,8 @@ public class CreateMatrixTask implements Task {
     public Future<?> initiate() {
         return null;
     }
+
+    public Path getPotentialMatrixFile() {
+        return potentialMatrixFile;
+    }
 }

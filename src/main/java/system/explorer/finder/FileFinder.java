@@ -1,5 +1,6 @@
 package system.explorer.finder;
 
+import queue.TaskQueue;
 import system.explorer.creator.TaskCreator;
 
 import java.io.IOException;

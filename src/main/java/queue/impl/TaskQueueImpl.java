@@ -20,6 +20,15 @@ public class TaskQueueImpl implements TaskQueue {
 
     @Override
     public Task takeTask() {
-        return taskQueue.getLast();
+        return taskQueue.pollLast();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return taskQueue.isEmpty();
+    }
+
+    public ConcurrentLinkedDeque<Task> getTaskQueue() {
+        return taskQueue;
     }
 }
