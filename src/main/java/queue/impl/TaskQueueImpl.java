@@ -4,12 +4,13 @@ import queue.TaskQueue;
 import task.Task;
 
 import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class TaskQueueImpl implements TaskQueue {
-    private final ConcurrentLinkedDeque<Task> taskQueue;
+    private final LinkedBlockingQueue<Task> taskQueue;
 
     public TaskQueueImpl(){
-        this.taskQueue = new ConcurrentLinkedDeque<>();
+        this.taskQueue = new LinkedBlockingQueue<>();
     }
 
 
@@ -20,7 +21,11 @@ public class TaskQueueImpl implements TaskQueue {
 
     @Override
     public Task takeTask() {
-        return taskQueue.pollLast();
+        try {
+            return taskQueue.take();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -28,7 +33,7 @@ public class TaskQueueImpl implements TaskQueue {
         return taskQueue.isEmpty();
     }
 
-    public ConcurrentLinkedDeque<Task> getTaskQueue() {
+    public LinkedBlockingQueue<Task> getTaskQueue() {
         return taskQueue;
     }
 }

@@ -11,13 +11,14 @@ public class SystemExplorerThread implements Runnable{
     }
     @Override
     public void run() {
-        while (true){
-            fileFinder.findFiles();
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        fileFinder.findFiles();
+//        while (true){
+//            fileFinder.findFiles();
+//            try {
+//                Thread.sleep(5000);
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
     }
 }
