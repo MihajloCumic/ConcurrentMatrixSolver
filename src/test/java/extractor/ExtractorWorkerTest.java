@@ -45,7 +45,7 @@ public class ExtractorWorkerTest {
 
         try {
             Matrix matrix1 = pool.submit(new ExtractorWorker(1200000, file, matrix, 1, linesNum)).get();
-            matrix1.printMatrix();
+            matrix1.printMatrix(true);
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }

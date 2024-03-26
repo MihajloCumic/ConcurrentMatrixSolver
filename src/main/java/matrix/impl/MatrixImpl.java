@@ -38,12 +38,28 @@ public class MatrixImpl implements Matrix {
     }
 
     @Override
-    public void printMatrix() {
+    public int getRowNumber() {
+        return rowNum;
+    }
+
+    @Override
+    public int getColNumber() {
+        return colNum;
+    }
+
+    @Override
+    public void printMatrix(boolean format) {
         System.out.println("Matrix: " + name);
         for(int i  = 0; i < rowNum; i++){
+            if(format) System.out.println();
             for(int j = 0; j < colNum; j++){
+                if(format){
+                    System.out.print(matrix[i][j] + " ");
+                    continue;
+                }
                 System.out.println(i + "," + j + " = " + matrix[i][j]);
             }
         }
+        if (format) System.out.println();
     }
 }
