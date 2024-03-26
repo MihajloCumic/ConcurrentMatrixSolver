@@ -6,4 +6,6 @@ public interface Matrix {
     BigInteger getElement(int row, int col);
     void putElement(int row, int col, BigInteger value);
 
+    void printMatrix();
+
 }
