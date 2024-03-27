@@ -3,6 +3,7 @@ package system.explorer.creator;
 import queue.TaskQueue;
 import task.Task;
 import task.impl.CreateMatrixTask;
+import task.impl.UpdateMatrixTask;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -16,7 +17,12 @@ public class TaskCreator {
         this.taskQueue = taskQueue;
     }
 
-    public void createAndSendTask(Path file){
+    public void createAndSendUpdateTask(Path file){
+        Task task = new UpdateMatrixTask(file);
+        taskQueue.addTask(task);
+    }
+
+    public void createAndSendCreateTask(Path file){
         files.add(file);
         Task task = new CreateMatrixTask(file);
         taskQueue.addTask(task);

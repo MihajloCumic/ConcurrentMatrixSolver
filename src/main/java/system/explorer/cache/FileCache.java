@@ -14,6 +14,15 @@ public class FileCache {
         this.lastModifiedCache = new ConcurrentHashMap<>();
     }
 
+    public void put(Path file){
+        try {
+            FileTime fileTime = Files.getLastModifiedTime(file);
+            lastModifiedCache.put(file, fileTime);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public boolean wasModified(Path file){
         if(!lastModifiedCache.containsKey(file)) return false;
         try {

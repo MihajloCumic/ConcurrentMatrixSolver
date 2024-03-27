@@ -2,8 +2,6 @@ package queue.impl;
 
 import queue.TaskQueue;
 import task.Task;
-
-import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class TaskQueueImpl implements TaskQueue {
@@ -33,7 +31,4 @@ public class TaskQueueImpl implements TaskQueue {
         return taskQueue.isEmpty();
     }
 
-    public LinkedBlockingQueue<Task> getTaskQueue() {
-        return taskQueue;
-    }
 }
