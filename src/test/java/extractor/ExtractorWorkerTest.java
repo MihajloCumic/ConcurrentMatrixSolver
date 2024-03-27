@@ -14,6 +14,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.Future;
 import java.util.stream.Stream;
 
 public class ExtractorWorkerTest {
@@ -37,7 +38,7 @@ public class ExtractorWorkerTest {
         int rowNum = Integer.parseInt(parts[1].trim().split("=")[1]);
         int colNum = Integer.parseInt(parts[2].trim().split("=")[1]);
         System.out.println(name);
-        Matrix matrix = new MatrixImpl(name, file, rowNum, colNum);
+        Matrix matrix = new MatrixImpl(file);
         System.out.println(linesNum);
 
 

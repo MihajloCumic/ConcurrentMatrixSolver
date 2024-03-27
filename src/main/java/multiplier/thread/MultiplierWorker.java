@@ -38,7 +38,6 @@ public class MultiplierWorker extends RecursiveTask<Matrix> {
             right.fork();
             left.join();
             right.join();
-
         }
         return resultMatrix;
     }

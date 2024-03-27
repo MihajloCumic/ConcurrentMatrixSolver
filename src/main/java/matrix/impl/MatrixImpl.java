@@ -2,29 +2,44 @@ package matrix.impl;
 
 import matrix.Matrix;
 
+import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.stream.Stream;
 
 public class MatrixImpl implements Matrix {
-    private final String name;
+    private  String name;
     private final Path file;
-
-    private final int rowNum;
-    private final int colNum;
+    private int rowNum;
+    private int colNum;
 
     private final BigInteger[][] matrix;
 
-    public MatrixImpl(String name, Path file, int rowNum, int colNum){
-        this.name = name;
+    public MatrixImpl(Path file){
+        initializeMatrixProperties(file);
         this.file = file;
-        this.rowNum = rowNum;
-        this.colNum = colNum;
         this.matrix = new BigInteger[rowNum][colNum];
         for(int i = 0; i < rowNum; i++){
             for(int j = 0; j < colNum; j++){
                 this.matrix[i][j] = BigInteger.ZERO;
             }
         }
+
+    }
+
+    private void initializeMatrixProperties(Path file){
+        //matrix_name=A2C2, rows=127, cols=117
+        String firstLine = "";
+        try(Stream<String> lineStream = Files.lines(file)) {
+            firstLine = lineStream.limit(1).toList().get(0);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        String[] parts = firstLine.split(",");
+        name = parts[0].trim().split("=")[1];
+        rowNum = Integer.parseInt(parts[1].trim().split("=")[1]);
+        colNum = Integer.parseInt(parts[2].trim().split("=")[1]);
 
     }
     @Override

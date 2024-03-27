@@ -13,7 +13,7 @@ import java.util.concurrent.ForkJoinPool;
 public class MultiplierWorkerTest {
     private static Matrix firstMatrix = createMatrix(3, 3);
     private static Matrix secondMatrix = createMatrix(3, 3);
-    private static Matrix resultMatrix = new MatrixImpl("result", Path.of("/path"), 2, 2);
+    private static Matrix resultMatrix = new MatrixImpl( Path.of("/path"));
     public static void main(String[] args) {
         firstMatrix.printMatrix(true);
         secondMatrix.printMatrix(true);
@@ -28,7 +28,7 @@ public class MultiplierWorkerTest {
     }
 
     private static Matrix createMatrix(int rowNum, int colNum){
-        Matrix matrix = new MatrixImpl("matrica", Path.of("/path"), rowNum, colNum);
+        Matrix matrix = new MatrixImpl(Path.of("/path"));
         for(int i = 0; i < rowNum; i++){
             for(int j = 0; j < colNum; j++){
                 String random =  (int)((Math.random() * (10 - 1)) + 1) + "";

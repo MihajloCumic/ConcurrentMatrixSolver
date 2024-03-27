@@ -14,7 +14,7 @@ public class SegmentMultiplierTest {
 
     private static Matrix firstMatrix = createMatrix(5, 3);
     private static Matrix secondMatrix = createMatrix(3, 5);
-    private static Matrix resultMatrix = new MatrixImpl("result", Path.of("/path"), 5, 5);
+    private static Matrix resultMatrix = new MatrixImpl(Path.of("/path"));
 
 
     public static void main(String[] args) {
@@ -44,7 +44,7 @@ public class SegmentMultiplierTest {
     }
 
     private static Matrix createMatrix(int rowNum, int colNum){
-        Matrix matrix = new MatrixImpl("matrica", Path.of("/path"), rowNum, colNum);
+        Matrix matrix = new MatrixImpl(Path.of("/path"));
         for(int i = 0; i < rowNum; i++){
             for(int j = 0; j < colNum; j++){
                 String random =  (int)((Math.random() * (10 - 1)) + 1) + "";

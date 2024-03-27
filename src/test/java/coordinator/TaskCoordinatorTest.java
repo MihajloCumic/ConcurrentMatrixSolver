@@ -2,6 +2,7 @@ package coordinator;
 
 import coordinator.impl.TaskCoordinator;
 import coordinator.thread.CoordinatorThread;
+import extractor.pool.ExtractorPool;
 import queue.TaskQueue;
 import queue.impl.TaskQueueImpl;
 import system.explorer.creator.TaskCreator;
@@ -15,7 +16,8 @@ public class TaskCoordinatorTest {
         FileFinder fileFinder = new FileFinder("/home/cuma/Fakultet/letnji-semestar/konkurenti-distribuirani/kids-test", ".rix", taskCreator, null);
 //        fileFinder.findFiles();
         Thread systemExplorer = new Thread(new SystemExplorerThread(fileFinder));
-        Coordinator coordinator = new TaskCoordinator();
+
+        Coordinator coordinator = new TaskCoordinator(new ExtractorPool());
         Thread coordinatorThread = new Thread(new CoordinatorThread(coordinator, taskQueue));
 
         systemExplorer.start();

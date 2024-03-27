@@ -27,25 +27,21 @@ public class ExtractorWorker extends RecursiveTask<Matrix> {
 
     @Override
     protected Matrix compute() {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         int size = getLinesByteSize();
-        System.out.println("Outside IF: " + size);
         if(size <= LIMIT){
-            System.out.println("IN If: " + size);
-            System.out.println("Start:" + start + " End: " + end);
             try(Stream<String> lineStream = Files.lines(file)) {
                 lineStream.skip(start).limit(end).forEach(line -> {
                     if(line.isBlank()) return;
-                    String[] parts = line.split(",");
-                    int row = Integer.parseInt(parts[0].trim());
-                    String[] colValue = parts[1].split("=");
-                    int col = Integer.parseInt(colValue[0].trim());
-                    BigInteger value = new BigInteger(colValue[1].trim());
-                    matrix.putElement(row, col, value);
+                    putValuesInMatrix(line);
                 });
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
         }else {
 
             ExtractorWorker left = new ExtractorWorker(LIMIT, file, matrix, start, start + 50);
@@ -61,10 +57,22 @@ public class ExtractorWorker extends RecursiveTask<Matrix> {
 
     private int getLinesByteSize(){
         try(Stream<String> lineStream = Files.lines(file)) {
-            int byteSize = lineStream.skip(start).limit(end).mapToInt(line -> line.getBytes(StandardCharsets.UTF_8).length).sum();
-            return byteSize;
+            return lineStream.skip(start).limit(end).mapToInt(line -> line.getBytes(StandardCharsets.UTF_8).length).sum();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void putValuesInMatrix(String line){
+        String[] parts = line.split(",");
+
+        int row = Integer.parseInt(parts[0].trim());
+
+        String[] colValue = parts[1].split("=");
+        int col = Integer.parseInt(colValue[0].trim());
+
+        BigInteger value = new BigInteger(colValue[1].trim());
+
+        matrix.putElement(row, col, value);
     }
 }
