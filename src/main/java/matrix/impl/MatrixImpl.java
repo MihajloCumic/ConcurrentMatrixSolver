@@ -63,6 +63,11 @@ public class MatrixImpl implements Matrix {
     }
 
     @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
     public void printMatrix(boolean format) {
         System.out.println("Matrix: " + name);
         for(int i  = 0; i < rowNum; i++){

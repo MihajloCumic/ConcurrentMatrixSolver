@@ -9,6 +9,8 @@ public interface Matrix {
     int getRowNumber();
     int getColNumber();
 
+    String getName();
+
 
     void printMatrix(boolean format);
 
