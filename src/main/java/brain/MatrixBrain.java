@@ -2,7 +2,9 @@ package brain;
 
 import brain.workers.CacheMatrixWorker;
 import brain.workers.InfoMatrixWorker;
+import brain.workers.MultiplyMatrixWorker;
 import matrix.Matrix;
+import queue.TaskQueue;
 
 import java.util.List;
 import java.util.Map;
@@ -15,10 +17,12 @@ public class MatrixBrain {
 
     private final ExecutorService executorService;
     private final ConcurrentMap<String, Matrix> matrices;
+    private final TaskQueue taskQueue;
 
-    public MatrixBrain(ExecutorService executorService){
+    public MatrixBrain(ExecutorService executorService, TaskQueue taskQueue){
         this.executorService = executorService;
         this.matrices = new ConcurrentHashMap<>();
+        this.taskQueue = taskQueue;
     }
 
     public void cacheMatrix(Matrix matrix){
@@ -32,8 +36,8 @@ public class MatrixBrain {
         return executorService.submit(new InfoMatrixWorker(matrices));
     }
 
-    public void multiplyMatricesBlocking(String firstMatrixName, String secondMatrixName){
-
+    public Future<String> multiplyMatricesBlocking(String firstMatrixName, String secondMatrixName, String resultMatrixName){
+            return executorService.submit(new MultiplyMatrixWorker(taskQueue, matrices, firstMatrixName, secondMatrixName, resultMatrixName));
     }
 
     public void multiplyMatricesAsync(String firstMatrixName, String secondMatrixName){

@@ -10,22 +10,34 @@ import java.util.stream.Stream;
 
 public class MatrixImpl implements Matrix {
     private  String name;
-    private final Path file;
+    private Path file;
     private int rowNum;
     private int colNum;
 
     private final BigInteger[][] matrix;
 
+    public MatrixImpl(String name, int rowNum, int colNum){
+        this.name = name;
+        this.rowNum = rowNum;
+        this.colNum = colNum;
+        this.file = null;
+        this.matrix = createZeroMatrix();
+    }
+
     public MatrixImpl(Path file){
         initializeMatrixProperties(file);
         this.file = file;
-        this.matrix = new BigInteger[rowNum][colNum];
+        this.matrix = createZeroMatrix();
+    }
+
+    private BigInteger[][] createZeroMatrix(){
+        BigInteger[][] matrix =new BigInteger[rowNum][colNum];
         for(int i = 0; i < rowNum; i++){
             for(int j = 0; j < colNum; j++){
-                this.matrix[i][j] = BigInteger.ZERO;
+                matrix[i][j] = BigInteger.ZERO;
             }
         }
-
+        return matrix;
     }
 
     private void initializeMatrixProperties(Path file){

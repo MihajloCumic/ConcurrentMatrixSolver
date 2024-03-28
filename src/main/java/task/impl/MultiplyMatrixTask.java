@@ -9,16 +9,12 @@ import java.util.concurrent.Future;
 public class MultiplyMatrixTask implements Task<Matrix> {
     private final Matrix firstMatrix;
     private final Matrix secondMatrix;
-    private final String resultMatrixName;
+    private final Matrix resultMatrix;
 
-    public MultiplyMatrixTask(Matrix firstMatrix, Matrix secondMatrix, String resultMatrixName){
+    public MultiplyMatrixTask(Matrix firstMatrix, Matrix secondMatrix, Matrix resultMatrix){
         this.firstMatrix = firstMatrix;
         this.secondMatrix = secondMatrix;
-        if(resultMatrixName.isBlank() || resultMatrixName.isEmpty()){
-            this.resultMatrixName = firstMatrix.getName().concat(secondMatrix.getName());
-        }else {
-            this.resultMatrixName = resultMatrixName;
-        }
+        this.resultMatrix = resultMatrix;
     }
     @Override
     public TaskType getType() {
@@ -28,5 +24,17 @@ public class MultiplyMatrixTask implements Task<Matrix> {
     @Override
     public Future<Matrix> initiate() {
         return null;
+    }
+
+    public Matrix getFirstMatrix() {
+        return firstMatrix;
+    }
+
+    public Matrix getSecondMatrix() {
+        return secondMatrix;
+    }
+
+    public Matrix getResultMatrix() {
+        return resultMatrix;
     }
 }

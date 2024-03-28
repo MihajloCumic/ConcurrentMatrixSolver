@@ -3,6 +3,7 @@ package coordinator;
 import coordinator.impl.TaskCoordinator;
 import coordinator.thread.CoordinatorThread;
 import extractor.pool.ExtractorPool;
+import multiplier.pool.MultiplierPool;
 import queue.TaskQueue;
 import queue.impl.TaskQueueImpl;
 import system.explorer.creator.TaskCreator;
@@ -17,7 +18,7 @@ public class TaskCoordinatorTest {
 //        fileFinder.findFiles();
         Thread systemExplorer = new Thread(new SystemExplorerThread(fileFinder));
 
-        Coordinator coordinator = new TaskCoordinator(new ExtractorPool());
+        Coordinator coordinator = new TaskCoordinator(new ExtractorPool(), new MultiplierPool());
         Thread coordinatorThread = new Thread(new CoordinatorThread(coordinator, taskQueue));
 
         systemExplorer.start();
