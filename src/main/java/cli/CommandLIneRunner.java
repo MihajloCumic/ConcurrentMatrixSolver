@@ -1,5 +1,8 @@
 package cli;
 
+import brain.MatrixBrain;
+import cli.commands.InfoCommand;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,9 +10,11 @@ import java.io.InputStreamReader;
 public class CommandLIneRunner {
 
     private final BufferedReader reader;
+    private final InfoCommand infoCommand;
 
-    public CommandLIneRunner(){
+    public CommandLIneRunner(MatrixBrain matrixBrain){
         this.reader = new BufferedReader(new InputStreamReader(System.in));
+        this.infoCommand = new InfoCommand(matrixBrain);
     }
 
     public void run() throws IOException {
@@ -27,6 +32,7 @@ public class CommandLIneRunner {
             }
             if(command.equals("info")){
                 System.out.println("Info.");
+                infoCommand.execute();
                 continue;
             }
         }

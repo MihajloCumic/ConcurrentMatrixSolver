@@ -10,7 +10,7 @@ public class CacheMatrixWorker implements Runnable{
     private final ConcurrentMap<String, Matrix> matrices;
     private final Matrix matrix;
 
-    public CacheMatrixWorker(ConcurrentHashMap<String, Matrix> matrices, Matrix matrix){
+    public CacheMatrixWorker(ConcurrentMap<String, Matrix> matrices, Matrix matrix){
         this.matrices = matrices;
         this.matrix = matrix;
     }
