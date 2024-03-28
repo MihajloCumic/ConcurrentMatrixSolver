@@ -15,7 +15,7 @@ public class MatrixBrain {
         this.matrices = new ConcurrentHashMap<>();
     }
 
-    public void saveMatrix(Matrix matrix){
+    public void cacheMatrix(Matrix matrix){
 
     }
 
