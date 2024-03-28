@@ -1,5 +1,6 @@
 package extractor.pool;
 
+import brain.MatrixBrain;
 import extractor.thread.ExtractorWorker;
 import matrix.Matrix;
 import matrix.impl.MatrixImpl;
@@ -10,18 +11,21 @@ import task.impl.UpdateMatrixTask;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
 import java.util.stream.Stream;
 
 public class ExtractorPool {
     private final ForkJoinPool forkJoinPool = new ForkJoinPool();
+    private final MatrixBrain matrixBrain;
 
-    public Future<Matrix> submitTask(Task task){
+    public ExtractorPool(MatrixBrain matrixBrain){
+        this.matrixBrain = matrixBrain;
+    }
+
+    public void submitTask(Task task){
         if(task instanceof CreateMatrixTask createMatrixTask){
-//            Future<Matrix> matrixFuture = createMatrixTask.initiate();
-//            Matrix matrix = matrixFuture.get();
-//                matrix.printMatrix(true);
             Path potentialMatrixFile = createMatrixTask.getPotentialMatrixFile();
             int linesNum;
             try(Stream<String> lineStream = Files.lines(potentialMatrixFile)) {
@@ -29,12 +33,13 @@ public class ExtractorPool {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            Future<Matrix> matrixFuture = forkJoinPool.submit(new ExtractorWorker(1200000,potentialMatrixFile, new MatrixImpl(potentialMatrixFile), 1, linesNum));
-            return matrixFuture;
+            try {
+                Matrix matrix = forkJoinPool.submit(new ExtractorWorker(1200000,potentialMatrixFile, new MatrixImpl(potentialMatrixFile), 1, linesNum)).get();
+                matrixBrain.cacheMatrix(matrix);
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
         }
-        if(task instanceof UpdateMatrixTask updateMatrixTask){
-            Future<?> matrixFuture = updateMatrixTask.initiate();
-        }
-        return null;
+
     }
 }
