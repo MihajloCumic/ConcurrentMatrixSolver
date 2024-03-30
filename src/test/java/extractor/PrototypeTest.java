@@ -27,7 +27,7 @@ public class PrototypeTest {
                 matrix = results.take().get();
             }
             if(matrix != null){
-                matrix.printMatrix(false);
+                //matrix.printMatrix(false);
             }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

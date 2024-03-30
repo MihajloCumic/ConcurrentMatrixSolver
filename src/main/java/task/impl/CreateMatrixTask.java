@@ -28,14 +28,6 @@ public class CreateMatrixTask implements Task<Matrix> {
 
     @Override
     public Future<Matrix> initiate() {
-        int linesNum;
-        try(Stream<String> lineStream = Files.lines(potentialMatrixFile)) {
-            linesNum = (int)lineStream.count();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        ExtractorWorker extractorWorker = new ExtractorWorker(1200000, potentialMatrixFile, new MatrixImpl(potentialMatrixFile), 1, linesNum);
-
         return null;
     }
 

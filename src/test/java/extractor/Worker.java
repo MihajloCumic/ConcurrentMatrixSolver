@@ -46,6 +46,7 @@ public class Worker implements Callable<Matrix> {
         int col = Integer.parseInt(colValue[0].trim());
 
         BigInteger value = new BigInteger(colValue[1].trim());
+        System.out.println("Row-> " + row+ " ,Col-> "  + col);
 
         matrix.putElement(row, col, value);
     }
