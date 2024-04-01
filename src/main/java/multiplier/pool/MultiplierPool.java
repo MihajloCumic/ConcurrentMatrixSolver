@@ -27,6 +27,9 @@ public class MultiplierPool {
                         0,
                         multiplyTask.getFirstMatrix().getColNumber())).get();
                 matrixBrain.cacheMatrix(matrix);
+                synchronized (multiplyTask){
+                    multiplyTask.notify();
+                }
 
             } catch (InterruptedException | ExecutionException e) {
                 throw new RuntimeException(e);

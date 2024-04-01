@@ -5,6 +5,7 @@ import brain.workers.InfoMatrixWorker;
 import brain.workers.MultiplyMatrixWorker;
 import matrix.Matrix;
 import queue.TaskQueue;
+import result.Result;
 
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ public class MatrixBrain {
 
     private final ExecutorService executorService;
     private final ConcurrentMap<String, Matrix> matrices;
+
     private final TaskQueue taskQueue;
 
     public MatrixBrain(ExecutorService executorService, TaskQueue taskQueue){
@@ -36,7 +38,7 @@ public class MatrixBrain {
         return executorService.submit(new InfoMatrixWorker(matrices));
     }
 
-    public Future<String> multiplyMatricesBlocking(String firstMatrixName, String secondMatrixName, String resultMatrixName){
+    public Future<Result> multiplyMatricesBlocking(String firstMatrixName, String secondMatrixName, String resultMatrixName){
             return executorService.submit(new MultiplyMatrixWorker(taskQueue, matrices, firstMatrixName, secondMatrixName, resultMatrixName));
     }
 

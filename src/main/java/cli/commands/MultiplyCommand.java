@@ -1,6 +1,8 @@
 package cli.commands;
 
 import brain.MatrixBrain;
+import cli.CommandLIneRunner;
+import result.impl.MultiplyResult;
 
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
@@ -27,10 +29,10 @@ public class MultiplyCommand {
            }
        }
         try {
-            return matrixBrain.multiplyMatricesBlocking(firstMatrixName, secondMatrixName, resultMatrixName).get();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
+            System.out.println("Calculating: " + firstMatrixName + " * " + secondMatrixName);
+            MultiplyResult multiplyResult = (MultiplyResult) matrixBrain.multiplyMatricesBlocking(firstMatrixName, secondMatrixName, resultMatrixName).get();
+            return multiplyResult.toString();
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
     }
