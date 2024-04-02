@@ -54,8 +54,24 @@ public class MatrixBrain {
         return resultFuture;
     }
 
-    public void multiplyMatricesAsync(String firstMatrixName, String secondMatrixName){
-
+    public void multiplyMatricesAsync(String firstMatrixName, String secondMatrixName, String resultMatrixName){
+        String key = "mul"+firstMatrixName+secondMatrixName+resultMatrixName;
+        if(resultCache.containsKey(key)){
+            try {
+                Future<Result> resultFuture = resultCache.get(key);
+                if(resultFuture.isDone()){
+                    System.out.println("The multiplication is done");
+                    System.out.println(resultFuture.get().toString());
+                    return;
+                }
+                System.out.println("Still multiplying.");
+                return;
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        Future<Result> resultFuture = executorService.submit(new MultiplyMatrixWorker(taskQueue, matrices, resultCache,firstMatrixName, secondMatrixName, resultMatrixName));
+        resultCache.put(key, resultFuture);
     }
 
 
