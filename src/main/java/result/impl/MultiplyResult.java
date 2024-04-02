@@ -5,25 +5,20 @@ import result.Result;
 public class MultiplyResult implements Result {
 
     private final String firstMatrixName;
-    private final String firstMatrixFile;
 
     private final String secondMatrixName;
-    private final String secondMatrixFile;
 
-    public MultiplyResult(String firstMatrixName, String firstMatrixFile, String secondMatrixName, String secondMatrixFile) {
+    private final String resultMatrixName;
+
+    public MultiplyResult(String firstMatrixName, String secondMatrixName, String resultMatrixName) {
         this.firstMatrixName = firstMatrixName;
-        this.firstMatrixFile = firstMatrixFile;
         this.secondMatrixName = secondMatrixName;
-        this.secondMatrixFile = secondMatrixFile;
+        this.resultMatrixName = resultMatrixName;
+
     }
 
     @Override
     public String toString() {
-        return "MultiplyResult{" +
-                "firstMatrixName='" + firstMatrixName + '\'' +
-                ", firstMatrixFile='" + firstMatrixFile + '\'' +
-                ", secondMatrixName='" + secondMatrixName + '\'' +
-                ", secondMatrixFile='" + secondMatrixFile + '\'' +
-                '}';
+        return "Result:\n\t" + firstMatrixName + " * " + secondMatrixName +  " = " + resultMatrixName;
     }
 }

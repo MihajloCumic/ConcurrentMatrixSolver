@@ -10,17 +10,20 @@ import task.impl.MultiplyMatrixTask;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.Future;
 
 public class MultiplyMatrixWorker implements Callable<Result> {
     private final String firstMatrixName;
     private final String secondMatrixName;
     private String resultMatrixName;
     private final ConcurrentMap<String, Matrix> matrices;
+    private final ConcurrentMap<String, Future<Result>> resultCache;
     private final TaskQueue taskQueue;
 
-    public MultiplyMatrixWorker(TaskQueue taskQueue,ConcurrentMap<String, Matrix> matrices, String firstMatrixName, String secondMatrixName, String resultMatrixName){
+    public MultiplyMatrixWorker(TaskQueue taskQueue, ConcurrentMap<String, Matrix> matrices, ConcurrentMap<String, Future<Result>> resultCache, String firstMatrixName, String secondMatrixName, String resultMatrixName){
         this.taskQueue = taskQueue;
         this.matrices = matrices;
+        this.resultCache = resultCache;
         this.firstMatrixName = firstMatrixName;
         this.secondMatrixName = secondMatrixName;
         this.resultMatrixName = resultMatrixName;
@@ -28,9 +31,10 @@ public class MultiplyMatrixWorker implements Callable<Result> {
 
     @Override
     public Result call() throws Exception {
+
         if(!matrices.containsKey(firstMatrixName))  throw new RuntimeException("No matrix with name: " + firstMatrixName);
         if(!matrices.containsKey(secondMatrixName)) throw new RuntimeException("No matrix with name: " + secondMatrixName);
-        if(resultMatrixName == null || resultMatrixName.isEmpty() || resultMatrixName.isBlank()) resultMatrixName = firstMatrixName.concat(secondMatrixName);
+        if(matrices.containsKey(resultMatrixName)) throw new RuntimeException("Matrix with name: " + resultMatrixName + " already exists.");
 
         Matrix firstMatrix = matrices.get(firstMatrixName);
         Matrix secondMatrix = matrices.get(secondMatrixName);
@@ -47,6 +51,6 @@ public class MultiplyMatrixWorker implements Callable<Result> {
             System.out.println("Sleep");
             Thread.sleep(5000);
         }
-        return new MultiplyResult(firstMatrixName, matrices.get(firstMatrixName).toString(), secondMatrixName, matrices.get(secondMatrixName).toString());
+        return new MultiplyResult(firstMatrixName,  secondMatrixName, resultMatrixName);
     }
 }

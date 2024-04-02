@@ -27,6 +27,8 @@ public class MultiplyCommand {
            if(parts[1].equals("-name")){
                resultMatrixName = parts[2];
            }
+       }else{
+           resultMatrixName = firstMatrixName + secondMatrixName;
        }
         try {
             System.out.println("Calculating: " + firstMatrixName + " * " + secondMatrixName);

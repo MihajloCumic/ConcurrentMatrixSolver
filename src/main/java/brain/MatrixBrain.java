@@ -9,15 +9,13 @@ import result.Result;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 public class MatrixBrain {
 
     private final ExecutorService executorService;
     private final ConcurrentMap<String, Matrix> matrices;
+    private final ConcurrentMap<String, Future<Result>> resultCache;
 
     private final TaskQueue taskQueue;
 
@@ -25,6 +23,7 @@ public class MatrixBrain {
         this.executorService = executorService;
         this.matrices = new ConcurrentHashMap<>();
         this.taskQueue = taskQueue;
+        this.resultCache = new ConcurrentHashMap<>();
     }
 
     public void cacheMatrix(Matrix matrix){
@@ -39,7 +38,19 @@ public class MatrixBrain {
     }
 
     public Future<Result> multiplyMatricesBlocking(String firstMatrixName, String secondMatrixName, String resultMatrixName){
-            return executorService.submit(new MultiplyMatrixWorker(taskQueue, matrices, firstMatrixName, secondMatrixName, resultMatrixName));
+        String key = "mul"+firstMatrixName+secondMatrixName+resultMatrixName;
+        if(resultCache.containsKey(key)){
+            try {
+                Result result = resultCache.get(key).get();
+                System.out.println(result.toString());
+                return resultCache.get(key);
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        Future<Result> resultFuture = executorService.submit(new MultiplyMatrixWorker(taskQueue, matrices, resultCache,firstMatrixName, secondMatrixName, resultMatrixName));
+        resultCache.put(key, resultFuture);
+        return resultFuture;
     }
 
     public void multiplyMatricesAsync(String firstMatrixName, String secondMatrixName){
