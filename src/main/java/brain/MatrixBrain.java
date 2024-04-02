@@ -42,6 +42,7 @@ public class MatrixBrain {
         if(resultCache.containsKey(key)){
             try {
                 Result result = resultCache.get(key).get();
+                System.out.println(resultCache.get(key).isDone());
                 System.out.println(result.toString());
                 return resultCache.get(key);
             } catch (InterruptedException | ExecutionException e) {
