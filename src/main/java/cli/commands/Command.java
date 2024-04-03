@@ -2,23 +2,13 @@ package cli.commands;
 
 
 import brain.MatrixBrain;
+import cli.commands.impl.InfoCommand;
+import cli.commands.impl.MultiplyCommand;
+import cli.commands.impl.StopCommand;
 
 public abstract class Command {
 
     protected MatrixBrain matrixBrain;
-
-    public static Command commandFactory(String type){
-        if(type.equals("info")){
-            return null;
-        }
-        if(type.equals("multiply") || type.equals("mul")){
-            return null;
-        }
-        if(type.equals("stop")){
-            return null;
-        }
-        return null;
-    }
 
     public Command(MatrixBrain matrixBrain){
         this.matrixBrain = matrixBrain;
@@ -32,6 +22,17 @@ public abstract class Command {
 
     private String[] extractTokens(String input){
         return input.replace(",", " ").replaceAll("[^\\S\\r\\n]{2,}", " ").trim().split(" ");
+    }
+
+    public static Command newInfoCommand(MatrixBrain matrixBrain){
+        return new InfoCommand(matrixBrain);
+    }
+    public static Command newMultiplyCommand(MatrixBrain matrixBrain){
+        return new MultiplyCommand(matrixBrain);
+    }
+
+    public static Command newStopCommand(MatrixBrain matrixBrain){
+        return new StopCommand(matrixBrain);
     }
 
 }

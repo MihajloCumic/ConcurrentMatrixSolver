@@ -11,6 +11,8 @@ public interface Matrix {
 
     String getName();
 
+    String getFilePath();
+
 
     void printMatrix(boolean format);
 

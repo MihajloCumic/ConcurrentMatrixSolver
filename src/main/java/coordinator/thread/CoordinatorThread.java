@@ -3,6 +3,7 @@ package coordinator.thread;
 import coordinator.Coordinator;
 import queue.TaskQueue;
 import task.Task;
+import task.type.TaskType;
 
 public class CoordinatorThread implements Runnable{
     private final Coordinator coordinator;
@@ -18,9 +19,13 @@ public class CoordinatorThread implements Runnable{
             try {
                 Task task = taskQueue.takeTask();
                 coordinator.delegateTask(task);
+                if(task.getType().equals(TaskType.POISON_PILL)){
+                    break;
+                }
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
+        System.out.println("Task coordinator shutdown.");
     }
 }

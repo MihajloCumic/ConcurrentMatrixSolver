@@ -1,6 +1,7 @@
 package cli;
 
 import brain.MatrixBrain;
+import cli.commands.Command;
 import cli.commands.impl.InfoCommand;
 import cli.commands.impl.MultiplyCommand;
 
@@ -11,13 +12,15 @@ import java.io.InputStreamReader;
 public class CommandLIneRunner {
 
     private final BufferedReader reader;
+    private final MatrixBrain matrixBrain;
     private final InfoCommand infoCommand;
-    private final MultiplyCommand multiplyCommand;
+
 
     public CommandLIneRunner(MatrixBrain matrixBrain){
         this.reader = new BufferedReader(new InputStreamReader(System.in));
+        this.matrixBrain = matrixBrain;
         this.infoCommand = new InfoCommand(matrixBrain);
-        this.multiplyCommand = new MultiplyCommand(matrixBrain);
+
     }
 
     public void run() throws IOException {
@@ -29,18 +32,19 @@ public class CommandLIneRunner {
                 continue;
             }
             String command = parts[0];
+            if(command.equals("shutdown")){
+                Command.newStopCommand(matrixBrain).execute(input);
+                continue;
+            }
             if(command.equals("stop")){
-                System.out.println("Stoping...");
                 break;
             }
             if(command.equals("info")){
-                System.out.println("Info.");
-                infoCommand.execute();
+                Command.newInfoCommand(matrixBrain).execute(input);
                 continue;
             }
             if(command.equals("multiply")){
-                System.out.println("Multiply.");
-                multiplyCommand.execute(input);
+                Command.newMultiplyCommand(matrixBrain).execute(input);
                 continue;
             }
             System.out.println("Invalid command: " + input);

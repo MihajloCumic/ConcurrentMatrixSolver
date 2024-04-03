@@ -6,9 +6,9 @@ import brain.workers.MultiplyMatrixWorker;
 import matrix.Matrix;
 import queue.TaskQueue;
 import result.Result;
+import task.impl.PoisonPill;
 
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.*;
 
 public class MatrixBrain {
@@ -74,6 +74,11 @@ public class MatrixBrain {
         resultCache.put(key, resultFuture);
     }
 
+    public void shutdown(){
+        taskQueue.addTask(new PoisonPill());
+        this.executorService.shutdown();
+        System.out.println("Matrix Brain shutdown");
+    }
 
 
 

@@ -1,16 +1,16 @@
 package cli.commands.impl;
 
 import brain.MatrixBrain;
+import cli.commands.Command;
 
-public class StopCommand {
-    private final MatrixBrain matrixBrain;
+public class StopCommand extends Command {
 
     public StopCommand(MatrixBrain matrixBrain){
-        this.matrixBrain = matrixBrain;
+        super(matrixBrain);
     }
 
-    public String execute(){
-
-        return "Stopping the app";
+    @Override
+    protected void execute(String[] tokens) {
+        matrixBrain.shutdown();
     }
 }
