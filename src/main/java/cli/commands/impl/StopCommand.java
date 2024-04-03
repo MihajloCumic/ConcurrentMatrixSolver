@@ -1,4 +1,4 @@
-package cli.commands;
+package cli.commands.impl;
 
 import brain.MatrixBrain;
 

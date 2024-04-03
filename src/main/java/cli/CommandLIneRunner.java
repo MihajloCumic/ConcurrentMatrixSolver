@@ -1,8 +1,8 @@
 package cli;
 
 import brain.MatrixBrain;
-import cli.commands.InfoCommand;
-import cli.commands.MultiplyCommand;
+import cli.commands.impl.InfoCommand;
+import cli.commands.impl.MultiplyCommand;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -40,8 +40,7 @@ public class CommandLIneRunner {
             }
             if(command.equals("multiply")){
                 System.out.println("Multiply.");
-                String result = multiplyCommand.execute(input);
-                System.out.println(result);
+                multiplyCommand.execute(input);
                 continue;
             }
             System.out.println("Invalid command: " + input);
