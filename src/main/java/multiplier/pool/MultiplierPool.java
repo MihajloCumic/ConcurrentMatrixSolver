@@ -20,7 +20,7 @@ public class MultiplierPool {
     public void submitTask(Task task){
         if(task instanceof MultiplyMatrixTask multiplyTask){
             try {
-                Matrix matrix = forkJoinPool.submit(new MultiplierWorker(94,
+                Matrix matrix = forkJoinPool.submit(new MultiplierWorker(10,
                         multiplyTask.getFirstMatrix(),
                         multiplyTask.getSecondMatrix(),
                         multiplyTask.getResultMatrix(),

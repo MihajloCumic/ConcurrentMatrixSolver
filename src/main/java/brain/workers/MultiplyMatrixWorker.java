@@ -4,6 +4,7 @@ import matrix.Matrix;
 import matrix.impl.MatrixImpl;
 import queue.TaskQueue;
 import result.Result;
+import result.impl.ErrorResult;
 import result.impl.MultiplyResult;
 import task.Task;
 import task.impl.MultiplyMatrixTask;
@@ -32,14 +33,14 @@ public class MultiplyMatrixWorker implements Callable<Result> {
     @Override
     public Result call() throws Exception {
 
-        if(!matrices.containsKey(firstMatrixName))  throw new RuntimeException("No matrix with name: " + firstMatrixName);
-        if(!matrices.containsKey(secondMatrixName)) throw new RuntimeException("No matrix with name: " + secondMatrixName);
-        if(matrices.containsKey(resultMatrixName)) throw new RuntimeException("Matrix with name: " + resultMatrixName + " already exists.");
+        if(!matrices.containsKey(firstMatrixName))  return new ErrorResult("No matrix with name: " + firstMatrixName);
+        if(!matrices.containsKey(secondMatrixName)) return new ErrorResult("No matrix with name: " + secondMatrixName);
+        if(matrices.containsKey(resultMatrixName)) return new ErrorResult("Matrix with name: " + resultMatrixName + " already exists.");
 
         Matrix firstMatrix = matrices.get(firstMatrixName);
         Matrix secondMatrix = matrices.get(secondMatrixName);
 
-        if(firstMatrix.getColNumber() != secondMatrix.getRowNumber()) throw new RuntimeException("Matrices: " + firstMatrixName + ", " + secondMatrixName + " can not be multiplied.");
+        if(firstMatrix.getColNumber() != secondMatrix.getRowNumber()) return new ErrorResult("Matrices: " + firstMatrixName + ", " + secondMatrixName + " can not be multiplied.");
 
         Matrix resultMatrix = new MatrixImpl(resultMatrixName, firstMatrix.getRowNumber(), secondMatrix.getColNumber());
 

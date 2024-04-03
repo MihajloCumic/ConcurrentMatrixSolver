@@ -2,6 +2,7 @@ package cli.commands;
 
 import brain.MatrixBrain;
 import cli.CommandLIneRunner;
+import result.Result;
 import result.impl.MultiplyResult;
 
 import java.util.Arrays;
@@ -32,8 +33,8 @@ public class MultiplyCommand {
        }
         try {
             System.out.println("Calculating: " + firstMatrixName + " * " + secondMatrixName);
-            MultiplyResult multiplyResult = (MultiplyResult) matrixBrain.multiplyMatricesBlocking(firstMatrixName, secondMatrixName, resultMatrixName).get();
-            return multiplyResult.toString();
+            Result result =  matrixBrain.multiplyMatricesBlocking(firstMatrixName, secondMatrixName, resultMatrixName).get();
+            return result.toString();
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
