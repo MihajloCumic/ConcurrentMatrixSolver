@@ -1,6 +1,5 @@
-package coordinator.impl;
+package coordinator.delegator;
 
-import coordinator.Coordinator;
 import extractor.pool.ExtractorPool;
 import multiplier.pool.MultiplierPool;
 import task.Task;
@@ -9,7 +8,7 @@ import task.impl.PoisonPill;
 import task.impl.UpdateMatrixTask;
 import task.type.TaskType;
 
-public class TaskCoordinator implements Coordinator {
+public class TaskCoordinator{
     private final ExtractorPool extractorPool;
     private final MultiplierPool multiplierPool;
 
@@ -17,7 +16,6 @@ public class TaskCoordinator implements Coordinator {
         this.extractorPool = extractorPool;
         this.multiplierPool = multiplierPool;
     }
-    @Override
     public void delegateTask(Task task) {
         System.out.println("Delegate: " + task);
         if(task instanceof CreateMatrixTask createMatrixTask) extractorPool.submitTask(createMatrixTask);

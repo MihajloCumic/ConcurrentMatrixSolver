@@ -1,6 +1,7 @@
 package extractor.pool;
 
 import brain.MatrixBrain;
+import extractor.Extractor;
 import extractor.thread.ExtractorWorker;
 import matrix.Matrix;
 import matrix.impl.MatrixImpl;
@@ -18,35 +19,38 @@ import java.nio.file.Path;
 import java.util.concurrent.*;
 import java.util.stream.Stream;
 
-public class ExtractorPool {
-    private final int BYTES_LIMIT = 1024;
+public class ExtractorPool extends Extractor {
+    private final int bytesLimit;
     private final ExecutorService executorService;
     private final ExecutorCompletionService<Matrix> completionService;
     private final MatrixBrain matrixBrain;
 
-    public ExtractorPool(MatrixBrain matrixBrain){
+    public ExtractorPool(MatrixBrain matrixBrain, int bytesLimit){
         this.executorService = Executors.newCachedThreadPool();
         this.completionService = new ExecutorCompletionService<>(this.executorService);
         this.matrixBrain = matrixBrain;
+        this.bytesLimit = bytesLimit;
     }
 
+    @Override
     public void submitTask(CreateMatrixTask task){
         Matrix matrix = extraxtMatrix(task.getPotentialMatrixFile());
         if(matrix == null) return;
         matrixBrain.cacheMatrix(matrix);
     }
 
+    @Override
     public void submitTask(UpdateMatrixTask updateMatrixTask){
         Matrix matrix = extraxtMatrix(updateMatrixTask.getMatrixFile());
         if(matrix == null) return;
         matrixBrain.updateMatrix(matrix);
     }
 
+    @Override
     public void submitTask(PoisonPill poisonPill){
         executorService.shutdown();
         System.out.println("Extractor pool shutdown.");
     }
-
     private Matrix extraxtMatrix(Path file){
         int numberOfJobs = divideTask(file);
         Matrix matrix = null;
@@ -77,12 +81,12 @@ public class ExtractorPool {
                 }
                 int tmp = byteCount + line.getBytes(StandardCharsets.UTF_8).length;
 
-                if(tmp < BYTES_LIMIT){
+                if(tmp < bytesLimit){
                     byteCount = tmp;
                     endLine++;
                     continue;
                 }
-                if(tmp == BYTES_LIMIT){
+                if(tmp == bytesLimit){
                     byteCount = 0;
                     completionService.submit(new ExtractorWorker(file, matrix, startLine, endLine));
                     numberOfJobs++;

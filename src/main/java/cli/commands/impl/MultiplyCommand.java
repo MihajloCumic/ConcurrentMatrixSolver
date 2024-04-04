@@ -1,12 +1,9 @@
 package cli.commands.impl;
 
 import brain.MatrixBrain;
-import cli.CommandLIneRunner;
 import cli.commands.Command;
 import result.Result;
-import result.impl.MultiplyResult;
 
-import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
 public class MultiplyCommand extends Command {

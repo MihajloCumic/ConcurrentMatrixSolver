@@ -3,26 +3,24 @@ package cli;
 import brain.MatrixBrain;
 import cli.commands.Command;
 import cli.commands.impl.InfoCommand;
-import cli.commands.impl.MultiplyCommand;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class CommandLIneRunner {
+public class CommandLineRunner implements Runner{
 
     private final BufferedReader reader;
     private final MatrixBrain matrixBrain;
-    private final InfoCommand infoCommand;
 
 
-    public CommandLIneRunner(MatrixBrain matrixBrain){
+    public CommandLineRunner(MatrixBrain matrixBrain){
         this.reader = new BufferedReader(new InputStreamReader(System.in));
         this.matrixBrain = matrixBrain;
-        this.infoCommand = new InfoCommand(matrixBrain);
 
     }
 
+    @Override
     public void run() throws IOException {
         while(true){
             String input = reader.readLine();

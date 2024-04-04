@@ -1,15 +1,15 @@
 package coordinator.thread;
 
-import coordinator.Coordinator;
+import coordinator.delegator.TaskCoordinator;
 import queue.TaskQueue;
 import task.Task;
 import task.type.TaskType;
 
 public class CoordinatorThread implements Runnable{
-    private final Coordinator coordinator;
+    private final TaskCoordinator coordinator;
     private final TaskQueue taskQueue;
 
-    public CoordinatorThread(Coordinator coordinator, TaskQueue taskQueue){
+    public CoordinatorThread(TaskCoordinator coordinator, TaskQueue taskQueue){
         this.coordinator = coordinator;
         this.taskQueue = taskQueue;
     }
