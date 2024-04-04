@@ -5,5 +5,5 @@ import properties.model.ConfigProperties;
 import java.io.IOException;
 
 public interface Loader {
-    ConfigProperties load() throws IOException;
+    ConfigProperties load() throws Exception;
 }

@@ -15,7 +15,7 @@ public class PropertiesLoader implements Loader {
         this.file = Path.of(fileName);
     }
     @Override
-    public ConfigProperties load() throws IOException {
+    public ConfigProperties load() throws Exception {
         Properties properties = new Properties();
         properties.load(Files.newBufferedReader(file));
         long sleepTime = Long.parseLong(properties.getProperty("sys_explorer_sleep_time"));
