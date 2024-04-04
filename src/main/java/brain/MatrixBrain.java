@@ -3,6 +3,7 @@ package brain;
 import brain.workers.CacheMatrixWorker;
 import brain.workers.InfoMatrixWorker;
 import brain.workers.MultiplyMatrixWorker;
+import brain.workers.UpdateMatrixWorker;
 import matrix.Matrix;
 import queue.TaskQueue;
 import result.Result;
@@ -28,6 +29,11 @@ public class MatrixBrain {
 
     public void cacheMatrix(Matrix matrix){
         executorService.submit(new CacheMatrixWorker(matrices, matrix));
+    }
+
+    public void updateMatrix(Matrix matrix){
+        System.out.println("Updating matrix:" + matrix.getName());
+        executorService.submit(new UpdateMatrixWorker(matrices, matrix));
     }
 
     public void saveMatrixInFile(String matrixName, String path){
@@ -76,7 +82,7 @@ public class MatrixBrain {
 
     public void shutdown(){
         taskQueue.addTask(new PoisonPill());
-        this.executorService.shutdown();
+        executorService.shutdown();
         System.out.println("Matrix Brain shutdown");
     }
 

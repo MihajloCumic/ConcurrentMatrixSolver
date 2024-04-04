@@ -27,11 +27,11 @@ public class CLITest {
         Thread coordinator = new Thread(new CoordinatorThread(taskCoordinator, taskQueue));
         coordinator.start();
 
-        String starterPath = "/home/cuma/Fakultet/letnji-semestar/konkurenti-distribuirani/kids-test/folder-2/folder-2-1";
+        String starterPath = "/home/cuma/Fakultet/letnji-semestar/konkurenti-distribuirani/kids-test/folder-1/folder-1-2";
         String extension = ".rix";
         TaskCreator taskCreator = new TaskCreator(taskQueue);
         FileCache fileCache = new FileCache();
-        Thread systemExplorer = new Thread(new SystemExplorerThread(new FileFinder(starterPath, extension, taskCreator, fileCache)));
+        Thread systemExplorer = new Thread(new SystemExplorerThread(new FileFinder(starterPath, extension, taskCreator, fileCache), 5000));
         systemExplorer.start();
 
         CommandLIneRunner cli = new CommandLIneRunner(matrixBrain);

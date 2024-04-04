@@ -22,4 +22,8 @@ public class UpdateMatrixTask implements Task {
     public Future<?> initiate() {
         return null;
     }
+
+    public Path getMatrixFile() {
+        return matrixFile;
+    }
 }

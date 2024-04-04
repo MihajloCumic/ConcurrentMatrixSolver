@@ -6,6 +6,7 @@ import matrix.Matrix;
 import matrix.impl.MatrixImpl;
 import task.Task;
 import task.impl.CreateMatrixTask;
+import task.impl.PoisonPill;
 import task.impl.UpdateMatrixTask;
 import task.type.TaskType;
 
@@ -29,32 +30,38 @@ public class ExtractorPool {
         this.matrixBrain = matrixBrain;
     }
 
-    public void submitTask(Task task){
-        if(task.getType().equals(TaskType.POISON_PILL)){
-            executorService.shutdown();
-            System.out.println("Extractor pool shutdown.");
-            return;
-        }
-        if(!task.getType().equals(TaskType.CREATE)) return;
-        CreateMatrixTask createMatrixTask = (CreateMatrixTask) task;
-        int numberOfJobs = divideTask(createMatrixTask);
+    public void submitTask(CreateMatrixTask task){
+        Matrix matrix = extraxtMatrix(task.getPotentialMatrixFile());
+        if(matrix == null) return;
+        matrixBrain.cacheMatrix(matrix);
+    }
+
+    public void submitTask(UpdateMatrixTask updateMatrixTask){
+        Matrix matrix = extraxtMatrix(updateMatrixTask.getMatrixFile());
+        if(matrix == null) return;
+        matrixBrain.updateMatrix(matrix);
+    }
+
+    public void submitTask(PoisonPill poisonPill){
+        executorService.shutdown();
+        System.out.println("Extractor pool shutdown.");
+    }
+
+    private Matrix extraxtMatrix(Path file){
+        int numberOfJobs = divideTask(file);
         Matrix matrix = null;
         try {
             for(int i = 0; i < numberOfJobs; i++){
                 matrix = completionService.take().get();
             }
-            if(matrix != null){
-                matrixBrain.cacheMatrix(matrix);
-            }
+            return matrix;
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
-
     }
 
-    private int divideTask(CreateMatrixTask task){
+    private int divideTask(Path file){
         int numberOfJobs = 0;
-        Path file = task.getPotentialMatrixFile();
         Matrix matrix = new MatrixImpl(file);
         try (BufferedReader reader = Files.newBufferedReader(file)) {
             boolean isFirst = true;
