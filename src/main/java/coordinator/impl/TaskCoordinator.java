@@ -20,5 +20,9 @@ public class TaskCoordinator implements Coordinator {
         System.out.println("Delegate: " + task);
         if(task.getType().equals(TaskType.CREATE)) extractorPool.submitTask((CreateMatrixTask) task);
         if(task.getType().equals(TaskType.MULTIPLY)) multiplierPool.submitTask(task);
+        if(task.getType().equals(TaskType.POISON_PILL)){
+            extractorPool.submitTask(task);
+            multiplierPool.submitTask(task);
+        }
     }
 }

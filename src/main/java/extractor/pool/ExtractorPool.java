@@ -7,6 +7,7 @@ import matrix.impl.MatrixImpl;
 import task.Task;
 import task.impl.CreateMatrixTask;
 import task.impl.UpdateMatrixTask;
+import task.type.TaskType;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,8 +29,15 @@ public class ExtractorPool {
         this.matrixBrain = matrixBrain;
     }
 
-    public void submitTask(CreateMatrixTask task){
-        int numberOfJobs = divideTask(task);
+    public void submitTask(Task task){
+        if(task.getType().equals(TaskType.POISON_PILL)){
+            executorService.shutdown();
+            System.out.println("Extractor pool shutdown.");
+            return;
+        }
+        if(!task.getType().equals(TaskType.CREATE)) return;
+        CreateMatrixTask createMatrixTask = (CreateMatrixTask) task;
+        int numberOfJobs = divideTask(createMatrixTask);
         Matrix matrix = null;
         try {
             for(int i = 0; i < numberOfJobs; i++){
