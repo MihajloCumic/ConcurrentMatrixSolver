@@ -10,7 +10,7 @@ public abstract class Extractor {
     public abstract void submitTask(CreateMatrixTask createMatrixTask);
     public abstract void submitTask(UpdateMatrixTask updateMatrixTask);
     public abstract void submitTask(PoisonPill poisonPill);
-    public Extractor newMatrixExtractor(MatrixBrain matrixBrain, int limit){
+    public static Extractor newMatrixExtractor(MatrixBrain matrixBrain, int limit){
         return new ExtractorPool(matrixBrain, limit);
     }
 

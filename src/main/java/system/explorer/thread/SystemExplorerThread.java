@@ -1,8 +1,9 @@
 package system.explorer.thread;
 
+import system.explorer.SystemExplorer;
 import system.explorer.finder.FileFinder;
 
-public class SystemExplorerThread implements Runnable{
+public class SystemExplorerThread extends SystemExplorer {
     private final FileFinder fileFinder;
     private final long pause;
     private boolean run = true;
@@ -22,8 +23,10 @@ public class SystemExplorerThread implements Runnable{
                 throw new RuntimeException(e);
             }
         }
+        System.out.println("System Explorer stopped.");
     }
 
+    @Override
     public void stop(){
         run = false;
     }
