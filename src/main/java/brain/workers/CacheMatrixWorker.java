@@ -16,6 +16,7 @@ public class CacheMatrixWorker implements Runnable{
     }
     @Override
     public void run() {
+        if(matrices.containsKey(matrix.getName())) return;
         matrices.putIfAbsent(matrix.getName(), matrix);
     }
 }

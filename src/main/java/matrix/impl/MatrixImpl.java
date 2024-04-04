@@ -86,6 +86,20 @@ public class MatrixImpl implements Matrix {
     }
 
     @Override
+    public String getMatrixContentAsString() {
+//        matrix_name=A1C1, rows=146, cols=146
+//        0,0 = 7129160
+        StringBuilder sb = new StringBuilder();
+        sb.append("matrix_name=").append(name).append(", rows=").append(rowNum).append(", cols=").append(colNum).append("\n");
+        for(int i = 0; i < rowNum; i++){
+            for(int j = 0; j < colNum; j++){
+                sb.append(i).append(",").append(j).append(" = ").append(matrix[i][j]).append("\n");
+            }
+        }
+        return sb.toString();
+    }
+
+    @Override
     public void printMatrix(boolean format) {
         System.out.println("Matrix: " + name);
         for(int i  = 0; i < rowNum; i++){
@@ -99,5 +113,10 @@ public class MatrixImpl implements Matrix {
             }
         }
         if (format) System.out.println();
+    }
+
+    @Override
+    public void setFile(Path file) {
+        this.file = file;
     }
 }

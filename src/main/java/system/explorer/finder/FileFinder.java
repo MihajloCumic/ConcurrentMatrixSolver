@@ -52,4 +52,8 @@ public class FileFinder {
             throw new RuntimeException(e);
         }
     }
+
+    public void addNewFile(Path file){
+        fileCache.put(file);
+    }
 }

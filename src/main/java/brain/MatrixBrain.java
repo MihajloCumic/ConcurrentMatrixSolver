@@ -1,14 +1,12 @@
 package brain;
 
-import brain.workers.CacheMatrixWorker;
-import brain.workers.InfoMatrixWorker;
-import brain.workers.MultiplyMatrixWorker;
-import brain.workers.UpdateMatrixWorker;
+import brain.workers.*;
 import matrix.Matrix;
 import queue.TaskQueue;
 import result.Result;
 import task.impl.PoisonPill;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -36,8 +34,14 @@ public class MatrixBrain {
         executorService.submit(new UpdateMatrixWorker(matrices, matrix));
     }
 
-    public void saveMatrixInFile(String matrixName, String path){
-
+    public void saveMatrixInFile(String matrixName, Path file){
+        try {
+            String message = executorService.submit(new SaveFileWorker(matrixName, file, matrices)).get();
+            System.out.println(message);
+        } catch (InterruptedException | ExecutionException e) {
+            System.out.println("My message:");
+            System.out.println(e.getLocalizedMessage());
+        }
     }
     public Future<List<Matrix>> getMatrixInfo(){
         return executorService.submit(new InfoMatrixWorker(matrices));

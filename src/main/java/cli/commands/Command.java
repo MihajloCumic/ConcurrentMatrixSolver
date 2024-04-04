@@ -4,6 +4,7 @@ package cli.commands;
 import brain.MatrixBrain;
 import cli.commands.impl.InfoCommand;
 import cli.commands.impl.MultiplyCommand;
+import cli.commands.impl.SaveCommand;
 import cli.commands.impl.StopCommand;
 
 public abstract class Command {
@@ -33,6 +34,8 @@ public abstract class Command {
 
     public static Command newStopCommand(MatrixBrain matrixBrain){
         return new StopCommand(matrixBrain);
+    }
+    public static Command newSaveCommand(MatrixBrain matrixBrain){return new SaveCommand(matrixBrain);
     }
 
 }

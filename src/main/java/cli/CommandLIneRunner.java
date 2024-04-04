@@ -47,6 +47,10 @@ public class CommandLIneRunner {
                 Command.newMultiplyCommand(matrixBrain).execute(input);
                 continue;
             }
+            if(command.equals("save")){
+                Command.newSaveCommand(matrixBrain).execute(input);
+                continue;
+            }
             System.out.println("Invalid command: " + input);
         }
         System.out.println("Finished.");

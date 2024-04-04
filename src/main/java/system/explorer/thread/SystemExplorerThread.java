@@ -14,7 +14,6 @@ public class SystemExplorerThread implements Runnable{
     }
     @Override
     public void run() {
-        fileFinder.findFiles();
         while (run){
             fileFinder.findFiles();
             try {
