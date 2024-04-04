@@ -1,11 +1,13 @@
 package brain;
 
+import brain.pool.MatrixBrainPool;
 import matrix.Matrix;
 import queue.TaskQueue;
 import result.Result;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public abstract class MatrixBrain {
@@ -19,7 +21,7 @@ public abstract class MatrixBrain {
     public abstract void shutdown();
 
     public static MatrixBrain newMatrixBrain(TaskQueue taskQueue){
-        return null;
+        return new MatrixBrainPool(Executors.newCachedThreadPool(), taskQueue);
     }
 
 }

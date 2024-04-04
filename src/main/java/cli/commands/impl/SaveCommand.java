@@ -1,5 +1,6 @@
 package cli.commands.impl;
 
+import brain.MatrixBrain;
 import brain.pool.MatrixBrainPool;
 import cli.commands.Command;
 
@@ -7,8 +8,8 @@ import java.nio.file.Path;
 
 public class SaveCommand extends Command {
 
-    public SaveCommand(MatrixBrainPool matrixBrainPool) {
-        super(matrixBrainPool);
+    public SaveCommand(MatrixBrain matrixBrain) {
+        super(matrixBrain);
     }
 
     @Override
@@ -20,7 +21,7 @@ public class SaveCommand extends Command {
         if(tokens[1].equals("-name") && tokens[3].equals("-file")){
             String matrixName = tokens[2];
             Path file = Path.of(tokens[4]);
-            matrixBrainPool.saveMatrixInFile(matrixName, file);
+            matrixBrain.saveMatrixInFile(matrixName, file);
             return;
         }
         System.out.println("Invalid input.");

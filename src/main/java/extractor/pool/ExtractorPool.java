@@ -1,5 +1,6 @@
 package extractor.pool;
 
+import brain.MatrixBrain;
 import brain.pool.MatrixBrainPool;
 import extractor.Extractor;
 import extractor.thread.ExtractorWorker;
@@ -20,12 +21,12 @@ public class ExtractorPool extends Extractor {
     private final int bytesLimit;
     private final ExecutorService executorService;
     private final ExecutorCompletionService<Matrix> completionService;
-    private final MatrixBrainPool matrixBrainPool;
+    private final MatrixBrain matrixBrain;
 
-    public ExtractorPool(MatrixBrainPool matrixBrainPool, int bytesLimit){
+    public ExtractorPool(MatrixBrain matrixBrain, int bytesLimit){
         this.executorService = Executors.newCachedThreadPool();
         this.completionService = new ExecutorCompletionService<>(this.executorService);
-        this.matrixBrainPool = matrixBrainPool;
+        this.matrixBrain = matrixBrain;
         this.bytesLimit = bytesLimit;
     }
 
@@ -33,14 +34,14 @@ public class ExtractorPool extends Extractor {
     public void submitTask(CreateMatrixTask task){
         Matrix matrix = extraxtMatrix(task.getPotentialMatrixFile());
         if(matrix == null) return;
-        matrixBrainPool.cacheMatrix(matrix);
+        matrixBrain.cacheMatrix(matrix);
     }
 
     @Override
     public void submitTask(UpdateMatrixTask updateMatrixTask){
         Matrix matrix = extraxtMatrix(updateMatrixTask.getMatrixFile());
         if(matrix == null) return;
-        matrixBrainPool.updateMatrix(matrix);
+        matrixBrain.updateMatrix(matrix);
     }
 
     @Override

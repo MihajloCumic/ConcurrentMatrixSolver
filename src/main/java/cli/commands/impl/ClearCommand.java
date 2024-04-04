@@ -1,12 +1,13 @@
 package cli.commands.impl;
 
+import brain.MatrixBrain;
 import brain.pool.MatrixBrainPool;
 import cli.commands.Command;
 
 public class ClearCommand extends Command {
 
-    public ClearCommand(MatrixBrainPool matrixBrainPool) {
-        super(matrixBrainPool);
+    public ClearCommand(MatrixBrain matrixBrain) {
+        super(matrixBrain);
     }
 
     @Override
@@ -16,6 +17,6 @@ public class ClearCommand extends Command {
             return;
         }
         String matrixName = tokens[1].endsWith(".rix") ? tokens[1].replaceAll(".rix", "") : tokens[1];
-        matrixBrainPool.clearMatrix(matrixName);
+        matrixBrain.clearMatrix(matrixName);
     }
 }

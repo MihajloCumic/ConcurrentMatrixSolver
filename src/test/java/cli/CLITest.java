@@ -23,7 +23,7 @@ public class CLITest {
 
         MatrixBrainPool matrixBrainPool = new MatrixBrainPool(Executors.newCachedThreadPool(), taskQueue);
 
-        TaskCoordinator taskCoordinator = new TaskCoordinator(new ExtractorPool(matrixBrainPool, 1024), new MultiplierPool(matrixBrainPool));
+        TaskCoordinator taskCoordinator = new TaskCoordinator(new ExtractorPool(matrixBrainPool, 1024), new MultiplierPool(matrixBrainPool, 10));
         Thread coordinator = new Thread(new CoordinatorThread(taskCoordinator, taskQueue));
         coordinator.start();
 

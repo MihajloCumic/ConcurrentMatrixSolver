@@ -1,5 +1,6 @@
 package cli;
 
+import brain.MatrixBrain;
 import brain.pool.MatrixBrainPool;
 import cli.commands.Command;
 
@@ -10,12 +11,12 @@ import java.io.InputStreamReader;
 public class CommandLineRunner implements Runner{
 
     private final BufferedReader reader;
-    private final MatrixBrainPool matrixBrainPool;
+    private final MatrixBrain matrixBrain;
 
 
-    public CommandLineRunner(MatrixBrainPool matrixBrainPool){
+    public CommandLineRunner(MatrixBrain matrixBrain){
         this.reader = new BufferedReader(new InputStreamReader(System.in));
-        this.matrixBrainPool = matrixBrainPool;
+        this.matrixBrain = matrixBrain;
 
     }
 
@@ -30,26 +31,26 @@ public class CommandLineRunner implements Runner{
             }
             String command = parts[0];
             if(command.equals("shutdown")){
-                Command.newStopCommand(matrixBrainPool).execute(input);
+                Command.newStopCommand(matrixBrain).execute(input);
                 continue;
             }
             if(command.equals("stop")){
                 break;
             }
             if(command.equals("info")){
-                Command.newInfoCommand(matrixBrainPool).execute(input);
+                Command.newInfoCommand(matrixBrain).execute(input);
                 continue;
             }
             if(command.equals("multiply")){
-                Command.newMultiplyCommand(matrixBrainPool).execute(input);
+                Command.newMultiplyCommand(matrixBrain).execute(input);
                 continue;
             }
             if(command.equals("save")){
-                Command.newSaveCommand(matrixBrainPool).execute(input);
+                Command.newSaveCommand(matrixBrain).execute(input);
                 continue;
             }
             if(command.equals("clear")){
-                Command.newClearCommand(matrixBrainPool).execute(input);
+                Command.newClearCommand(matrixBrain).execute(input);
                 continue;
             }
             System.out.println("Invalid command: " + input);

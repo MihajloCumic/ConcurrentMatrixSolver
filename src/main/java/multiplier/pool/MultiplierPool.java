@@ -1,5 +1,6 @@
 package multiplier.pool;
 
+import brain.MatrixBrain;
 import brain.pool.MatrixBrainPool;
 import matrix.Matrix;
 import multiplier.Multiplier;
@@ -13,23 +14,26 @@ import java.util.concurrent.ForkJoinPool;
 
 public class MultiplierPool extends Multiplier {
     private final ForkJoinPool forkJoinPool = new ForkJoinPool();
-    private final MatrixBrainPool matrixBrainPool;
+    private final MatrixBrain matrixBrain;
+    private final int maxRowsSize;
 
-    public MultiplierPool(MatrixBrainPool matrixBrainPool) {
-        this.matrixBrainPool = matrixBrainPool;
+    public MultiplierPool(MatrixBrain matrixBrain, int maxRowsSize) {
+
+        this.matrixBrain = matrixBrain;
+        this.maxRowsSize = maxRowsSize;
     }
 
     @Override
     public void submitTask(MultiplyMatrixTask multiplyTask) {
 
         try {
-            Matrix matrix = forkJoinPool.submit(new MultiplierWorker(10,
+            Matrix matrix = forkJoinPool.submit(new MultiplierWorker(maxRowsSize,
                     multiplyTask.getFirstMatrix(),
                     multiplyTask.getSecondMatrix(),
                     multiplyTask.getResultMatrix(),
                     0,
                     multiplyTask.getFirstMatrix().getColNumber())).get();
-            matrixBrainPool.cacheMatrix(matrix);
+            matrixBrain.cacheMatrix(matrix);
             synchronized (multiplyTask) {
                 multiplyTask.notify();
             }
