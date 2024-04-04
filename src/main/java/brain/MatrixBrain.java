@@ -43,6 +43,11 @@ public class MatrixBrain {
             System.out.println(e.getLocalizedMessage());
         }
     }
+
+    public void clearMatrix(String matrixName){
+        executorService.submit(new ClearMatrixWorker(matrixName, matrices, resultCache));
+
+    }
     public Future<List<Matrix>> getMatrixInfo(){
         return executorService.submit(new InfoMatrixWorker(matrices));
     }

@@ -51,6 +51,10 @@ public class CommandLIneRunner {
                 Command.newSaveCommand(matrixBrain).execute(input);
                 continue;
             }
+            if(command.equals("clear")){
+                Command.newClearCommand(matrixBrain).execute(input);
+                continue;
+            }
             System.out.println("Invalid command: " + input);
         }
         System.out.println("Finished.");
