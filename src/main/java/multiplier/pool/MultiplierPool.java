@@ -25,7 +25,7 @@ public class MultiplierPool extends Multiplier {
 
     @Override
     public void submitTask(MultiplyMatrixTask multiplyTask) {
-
+        multiplyTask.getFirstMatrix().printMatrix(false);
         try {
             Matrix matrix = forkJoinPool.submit(new MultiplierWorker(maxRowsSize,
                     multiplyTask.getFirstMatrix(),

@@ -32,8 +32,6 @@ public class MultiplierWorker extends RecursiveTask<Matrix> {
         }else{
             //int mid = to % 2 == 0? to / 2 : (to / 2) + 1;
             int mid = from + LIMIT;
-            System.out.println("From->"+from);
-            System.out.println("To->"+to);
             MultiplierWorker left = new MultiplierWorker(LIMIT, firstMatrix, secondMatrix, resultMatrix, from, mid);
             MultiplierWorker right = new MultiplierWorker(LIMIT, firstMatrix, secondMatrix, resultMatrix, mid, to);
 
