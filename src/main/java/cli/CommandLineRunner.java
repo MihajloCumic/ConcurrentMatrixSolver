@@ -1,8 +1,7 @@
 package cli;
 
-import brain.MatrixBrain;
+import brain.pool.MatrixBrainPool;
 import cli.commands.Command;
-import cli.commands.impl.InfoCommand;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,12 +10,12 @@ import java.io.InputStreamReader;
 public class CommandLineRunner implements Runner{
 
     private final BufferedReader reader;
-    private final MatrixBrain matrixBrain;
+    private final MatrixBrainPool matrixBrainPool;
 
 
-    public CommandLineRunner(MatrixBrain matrixBrain){
+    public CommandLineRunner(MatrixBrainPool matrixBrainPool){
         this.reader = new BufferedReader(new InputStreamReader(System.in));
-        this.matrixBrain = matrixBrain;
+        this.matrixBrainPool = matrixBrainPool;
 
     }
 
@@ -31,26 +30,26 @@ public class CommandLineRunner implements Runner{
             }
             String command = parts[0];
             if(command.equals("shutdown")){
-                Command.newStopCommand(matrixBrain).execute(input);
+                Command.newStopCommand(matrixBrainPool).execute(input);
                 continue;
             }
             if(command.equals("stop")){
                 break;
             }
             if(command.equals("info")){
-                Command.newInfoCommand(matrixBrain).execute(input);
+                Command.newInfoCommand(matrixBrainPool).execute(input);
                 continue;
             }
             if(command.equals("multiply")){
-                Command.newMultiplyCommand(matrixBrain).execute(input);
+                Command.newMultiplyCommand(matrixBrainPool).execute(input);
                 continue;
             }
             if(command.equals("save")){
-                Command.newSaveCommand(matrixBrain).execute(input);
+                Command.newSaveCommand(matrixBrainPool).execute(input);
                 continue;
             }
             if(command.equals("clear")){
-                Command.newClearCommand(matrixBrain).execute(input);
+                Command.newClearCommand(matrixBrainPool).execute(input);
                 continue;
             }
             System.out.println("Invalid command: " + input);

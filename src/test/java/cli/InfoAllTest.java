@@ -1,6 +1,6 @@
 package cli;
 
-import brain.MatrixBrain;
+import brain.pool.MatrixBrainPool;
 import coordinator.delegator.TaskCoordinator;
 import coordinator.thread.CoordinatorThread;
 import extractor.pool.ExtractorPool;
@@ -22,16 +22,16 @@ public class InfoAllTest {
         Matrix m4 = new MatrixImpl(Path.of("/home/cuma/Fakultet/letnji-semestar/konkurenti-distribuirani/kids-test/moja-matrica4.rix"));
 
         TaskQueue taskQueue = new TaskQueueImpl();
-        MatrixBrain matrixBrain = new MatrixBrain(Executors.newCachedThreadPool(), taskQueue);
-        TaskCoordinator taskCoordinator = new TaskCoordinator(new ExtractorPool(matrixBrain, 1024), new MultiplierPool(matrixBrain));
+        MatrixBrainPool matrixBrainPool = new MatrixBrainPool(Executors.newCachedThreadPool(), taskQueue);
+        TaskCoordinator taskCoordinator = new TaskCoordinator(new ExtractorPool(matrixBrainPool, 1024), new MultiplierPool(matrixBrainPool));
         Thread coordinator = new Thread(new CoordinatorThread(taskCoordinator, taskQueue));
         coordinator.start();
 
-        matrixBrain.cacheMatrix(m1);
-        matrixBrain.cacheMatrix(m2);
-        matrixBrain.cacheMatrix(m3);
-        matrixBrain.cacheMatrix(m4);
-        CommandLineRunner cli = new CommandLineRunner(matrixBrain);
+        matrixBrainPool.cacheMatrix(m1);
+        matrixBrainPool.cacheMatrix(m2);
+        matrixBrainPool.cacheMatrix(m3);
+        matrixBrainPool.cacheMatrix(m4);
+        CommandLineRunner cli = new CommandLineRunner(matrixBrainPool);
         try {
             cli.run();
             coordinator.join();

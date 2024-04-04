@@ -1,15 +1,15 @@
 package cli.commands;
 
 
-import brain.MatrixBrain;
+import brain.pool.MatrixBrainPool;
 import cli.commands.impl.*;
 
 public abstract class Command {
 
-    protected MatrixBrain matrixBrain;
+    protected MatrixBrainPool matrixBrainPool;
 
-    public Command(MatrixBrain matrixBrain){
-        this.matrixBrain = matrixBrain;
+    public Command(MatrixBrainPool matrixBrainPool){
+        this.matrixBrainPool = matrixBrainPool;
     }
 
     public void execute(String input){
@@ -22,19 +22,19 @@ public abstract class Command {
         return input.replace(",", " ").replaceAll("[^\\S\\r\\n]{2,}", " ").trim().split(" ");
     }
 
-    public static Command newInfoCommand(MatrixBrain matrixBrain){
-        return new InfoCommand(matrixBrain);
+    public static Command newInfoCommand(MatrixBrainPool matrixBrainPool){
+        return new InfoCommand(matrixBrainPool);
     }
-    public static Command newMultiplyCommand(MatrixBrain matrixBrain){
-        return new MultiplyCommand(matrixBrain);
+    public static Command newMultiplyCommand(MatrixBrainPool matrixBrainPool){
+        return new MultiplyCommand(matrixBrainPool);
     }
 
-    public static Command newStopCommand(MatrixBrain matrixBrain){
-        return new StopCommand(matrixBrain);
+    public static Command newStopCommand(MatrixBrainPool matrixBrainPool){
+        return new StopCommand(matrixBrainPool);
     }
-    public static Command newSaveCommand(MatrixBrain matrixBrain){return new SaveCommand(matrixBrain);
+    public static Command newSaveCommand(MatrixBrainPool matrixBrainPool){return new SaveCommand(matrixBrainPool);
     }
-    public static Command newClearCommand(MatrixBrain matrixBrain){return new ClearCommand(matrixBrain);
+    public static Command newClearCommand(MatrixBrainPool matrixBrainPool){return new ClearCommand(matrixBrainPool);
     }
 
 }

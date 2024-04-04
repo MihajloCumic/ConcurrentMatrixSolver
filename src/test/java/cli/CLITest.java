@@ -1,6 +1,6 @@
 package cli;
 
-import brain.MatrixBrain;
+import brain.pool.MatrixBrainPool;
 import coordinator.delegator.TaskCoordinator;
 import coordinator.thread.CoordinatorThread;
 import extractor.pool.ExtractorPool;
@@ -21,9 +21,9 @@ public class CLITest {
 
         TaskQueue taskQueue = new TaskQueueImpl();
 
-        MatrixBrain matrixBrain = new MatrixBrain(Executors.newCachedThreadPool(), taskQueue);
+        MatrixBrainPool matrixBrainPool = new MatrixBrainPool(Executors.newCachedThreadPool(), taskQueue);
 
-        TaskCoordinator taskCoordinator = new TaskCoordinator(new ExtractorPool(matrixBrain, 1024), new MultiplierPool(matrixBrain));
+        TaskCoordinator taskCoordinator = new TaskCoordinator(new ExtractorPool(matrixBrainPool, 1024), new MultiplierPool(matrixBrainPool));
         Thread coordinator = new Thread(new CoordinatorThread(taskCoordinator, taskQueue));
         coordinator.start();
 
@@ -34,7 +34,7 @@ public class CLITest {
         Thread systemExplorer = new Thread(new SystemExplorerThread(new FileFinder(starterPath, extension, taskCreator, fileCache), 5000));
         systemExplorer.start();
 
-        CommandLineRunner cli = new CommandLineRunner(matrixBrain);
+        CommandLineRunner cli = new CommandLineRunner(matrixBrainPool);
         try {
             cli.run();
             systemExplorer.join();

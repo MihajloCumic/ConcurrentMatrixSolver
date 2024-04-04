@@ -1,15 +1,13 @@
 package extractor.pool;
 
-import brain.MatrixBrain;
+import brain.pool.MatrixBrainPool;
 import extractor.Extractor;
 import extractor.thread.ExtractorWorker;
 import matrix.Matrix;
 import matrix.impl.MatrixImpl;
-import task.Task;
 import task.impl.CreateMatrixTask;
 import task.impl.PoisonPill;
 import task.impl.UpdateMatrixTask;
-import task.type.TaskType;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,18 +15,17 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.*;
-import java.util.stream.Stream;
 
 public class ExtractorPool extends Extractor {
     private final int bytesLimit;
     private final ExecutorService executorService;
     private final ExecutorCompletionService<Matrix> completionService;
-    private final MatrixBrain matrixBrain;
+    private final MatrixBrainPool matrixBrainPool;
 
-    public ExtractorPool(MatrixBrain matrixBrain, int bytesLimit){
+    public ExtractorPool(MatrixBrainPool matrixBrainPool, int bytesLimit){
         this.executorService = Executors.newCachedThreadPool();
         this.completionService = new ExecutorCompletionService<>(this.executorService);
-        this.matrixBrain = matrixBrain;
+        this.matrixBrainPool = matrixBrainPool;
         this.bytesLimit = bytesLimit;
     }
 
@@ -36,14 +33,14 @@ public class ExtractorPool extends Extractor {
     public void submitTask(CreateMatrixTask task){
         Matrix matrix = extraxtMatrix(task.getPotentialMatrixFile());
         if(matrix == null) return;
-        matrixBrain.cacheMatrix(matrix);
+        matrixBrainPool.cacheMatrix(matrix);
     }
 
     @Override
     public void submitTask(UpdateMatrixTask updateMatrixTask){
         Matrix matrix = extraxtMatrix(updateMatrixTask.getMatrixFile());
         if(matrix == null) return;
-        matrixBrain.updateMatrix(matrix);
+        matrixBrainPool.updateMatrix(matrix);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package cli.commands.impl;
 
-import brain.MatrixBrain;
+import brain.pool.MatrixBrainPool;
 import cli.commands.Command;
 import result.Result;
 
@@ -8,8 +8,8 @@ import java.util.concurrent.ExecutionException;
 
 public class MultiplyCommand extends Command {
 
-    public MultiplyCommand(MatrixBrain matrixBrain){
-        super(matrixBrain);
+    public MultiplyCommand(MatrixBrainPool matrixBrainPool){
+        super(matrixBrainPool);
     }
     @Override
     protected void execute(String[] tokens) {
@@ -50,11 +50,11 @@ public class MultiplyCommand extends Command {
         }
         if(resultMatrixName.isEmpty() || resultMatrixName.isBlank()) resultMatrixName = firstMatrixName.concat(secondMatrixName);
         if(async){
-            matrixBrain.multiplyMatricesAsync(firstMatrixName, secondMatrixName, resultMatrixName);
+            matrixBrainPool.multiplyMatricesAsync(firstMatrixName, secondMatrixName, resultMatrixName);
             return;
         }
         try {
-            Result result = matrixBrain.multiplyMatricesBlocking(firstMatrixName, secondMatrixName, resultMatrixName).get();
+            Result result = matrixBrainPool.multiplyMatricesBlocking(firstMatrixName, secondMatrixName, resultMatrixName).get();
             System.out.println(result.toString());
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
