@@ -28,20 +28,19 @@ public class FileFinder {
              filePath
                     .filter(path -> {
                         boolean isDirectory = Files.isDirectory(path);
-                        if(isDirectory) System.out.println("Searching folder: " + path.getFileName());
+//                        if(isDirectory) System.out.println("Searching folder: " + path.getFileName());
                         return !isDirectory;
                     })
                     .filter(path -> path.toString().toLowerCase().endsWith(extensionToFind))
                     .forEach(path -> {
-                            System.out.println("Found file: " + path.getFileName());
                             if(!fileCache.containsKey(path)){
-                                System.out.println("New file.");
+                                System.out.println("Found new file: " + path);
                                 fileCache.put(path);
                                 taskCreator.createAndSendCreateTask(path);
                                 return;
                             }
                             if(fileCache.wasModified(path)){
-                                System.out.println("Changed file.");
+                                System.out.println("Found modified file: " + path);
                                 fileCache.put(path);
                                 taskCreator.createAndSendUpdateTask(path);
                             }
@@ -51,9 +50,5 @@ public class FileFinder {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void addNewFile(Path file){
-        fileCache.put(file);
     }
 }

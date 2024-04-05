@@ -65,6 +65,7 @@ public class ExtractorPool extends Extractor {
     private int divideTask(Path file){
         int numberOfJobs = 0;
         Matrix matrix = new MatrixImpl(file);
+
         try (BufferedReader reader = Files.newBufferedReader(file)) {
             boolean isFirst = true;
             int byteCount = 0;
@@ -99,6 +100,9 @@ public class ExtractorPool extends Extractor {
                 startLine = endLine - 1;
                 endLine++;
 
+            }
+            if(byteCount < 1024 && byteCount > 0){
+                completionService.submit(new ExtractorWorker(file, matrix, startLine, endLine));
             }
         } catch (IOException e) {
             e.printStackTrace();
