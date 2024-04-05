@@ -3,6 +3,7 @@ package cli;
 import brain.MatrixBrain;
 import brain.pool.MatrixBrainPool;
 import cli.commands.Command;
+import system.explorer.SystemExplorer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,11 +13,13 @@ public class CommandLineRunner implements Runner{
 
     private final BufferedReader reader;
     private final MatrixBrain matrixBrain;
+    private final SystemExplorer systemExplorer;
 
 
-    public CommandLineRunner(MatrixBrain matrixBrain){
+    public CommandLineRunner(MatrixBrain matrixBrain, SystemExplorer systemExplorer){
         this.reader = new BufferedReader(new InputStreamReader(System.in));
         this.matrixBrain = matrixBrain;
+        this.systemExplorer = systemExplorer;
 
     }
 
@@ -30,11 +33,8 @@ public class CommandLineRunner implements Runner{
                 continue;
             }
             String command = parts[0];
-            if(command.equals("shutdown")){
-                Command.newStopCommand(matrixBrain).execute(input);
-                continue;
-            }
             if(command.equals("stop")){
+                Command.newStopCommand(matrixBrain, systemExplorer).execute(input);
                 break;
             }
             if(command.equals("info")){

@@ -34,7 +34,7 @@ public class CLITest {
         Thread systemExplorer = new Thread(new SystemExplorerThread(new FileFinder(starterPath, extension, taskCreator, fileCache), 5000));
         systemExplorer.start();
 
-        CommandLineRunner cli = new CommandLineRunner(matrixBrainPool);
+        CommandLineRunner cli = new CommandLineRunner(matrixBrainPool, null);
         try {
             cli.run();
             systemExplorer.join();

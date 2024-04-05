@@ -4,6 +4,7 @@ package cli.commands;
 import brain.MatrixBrain;
 import brain.pool.MatrixBrainPool;
 import cli.commands.impl.*;
+import system.explorer.SystemExplorer;
 
 public abstract class Command {
 
@@ -30,8 +31,8 @@ public abstract class Command {
         return new MultiplyCommand(matrixBrain);
     }
 
-    public static Command newStopCommand(MatrixBrain matrixBrain){
-        return new StopCommand(matrixBrain);
+    public static Command newStopCommand(MatrixBrain matrixBrain, SystemExplorer systemExplorer){
+        return new StopCommand(matrixBrain, systemExplorer);
     }
     public static Command newSaveCommand(MatrixBrain matrixBrain){return new SaveCommand(matrixBrain);
     }

@@ -23,14 +23,15 @@ public class App {
             Multiplier multiplier = Multiplier.newMatrixMultiplier(matrixBrain, configProperties.maxRowsSize());
             Extractor extractor = Extractor.newMatrixExtractor(matrixBrain, configProperties.maxChunkSize());
             Thread coordinator = new Thread(Coordinator.newTaskCoordinator(taskQueue, extractor, multiplier));
-            Thread systemExplorer = new Thread(SystemExplorer.newSystemExplorer(configProperties.startDir(), taskQueue, configProperties.sleepTime()));
+            SystemExplorer systemExplorer = SystemExplorer.newSystemExplorer(configProperties.startDir(), taskQueue, configProperties.sleepTime());
+            Thread systemExplorerThread = new Thread(systemExplorer);
             coordinator.start();
-            systemExplorer.start();
-            Runner commandRunner = new CommandLineRunner(matrixBrain);
+            systemExplorerThread.start();
+            Runner commandRunner = new CommandLineRunner(matrixBrain, systemExplorer);
             commandRunner.run();
 
             coordinator.join();
-            systemExplorer.join();
+            systemExplorerThread.join();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

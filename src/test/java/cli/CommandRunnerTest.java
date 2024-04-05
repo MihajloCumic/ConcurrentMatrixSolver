@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class CommandRunnerTest {
     public static void main(String[] args) {
-        CommandLineRunner cli = new CommandLineRunner(null);
+        CommandLineRunner cli = new CommandLineRunner(null, null);
         try {
             cli.run();
         } catch (IOException e) {

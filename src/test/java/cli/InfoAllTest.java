@@ -31,7 +31,7 @@ public class InfoAllTest {
         matrixBrainPool.cacheMatrix(m2);
         matrixBrainPool.cacheMatrix(m3);
         matrixBrainPool.cacheMatrix(m4);
-        CommandLineRunner cli = new CommandLineRunner(matrixBrainPool);
+        CommandLineRunner cli = new CommandLineRunner(matrixBrainPool, null);
         try {
             cli.run();
             coordinator.join();
