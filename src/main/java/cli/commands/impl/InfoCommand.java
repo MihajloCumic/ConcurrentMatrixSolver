@@ -17,9 +17,15 @@ public class InfoCommand extends Command {
     @Override
     protected void execute(String[] tokens) {
         if(tokens.length == 2){
-            matrixBrain.getMatrixInfo(tokens[1]);
+            if(tokens[1].equals("-all")) matrixBrain.getAllMatricesInfo();
+            else matrixBrain.getMatrixInfo(tokens[1]);
             return;
         }
+        if(tokens.length == 3){
+            return;
+        }
+        System.out.println("Invalid command.");
+
     }
 
 }

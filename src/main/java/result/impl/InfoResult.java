@@ -28,7 +28,8 @@ public class InfoResult implements Result {
                     .append(", cols = ")
                     .append(matrix.getColNumber())
                     .append(" | ")
-                    .append(matrix.getFilePath());
+                    .append(matrix.getFilePath())
+                    .append("\n");
         }
         return sb.toString();
     }
