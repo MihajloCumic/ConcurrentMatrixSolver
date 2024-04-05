@@ -91,9 +91,9 @@ public class MatrixImpl implements Matrix {
 //        0,0 = 7129160
         StringBuilder sb = new StringBuilder();
         sb.append("matrix_name=").append(name).append(", rows=").append(rowNum).append(", cols=").append(colNum).append("\n");
-        for(int i = 0; i < rowNum; i++){
-            for(int j = 0; j < colNum; j++){
-                sb.append(i).append(",").append(j).append(" = ").append(matrix[i][j]).append("\n");
+        for(int i = 0; i < colNum; i++){
+            for(int j = 0; j < rowNum; j++){
+                sb.append(j).append(",").append(i).append(" = ").append(matrix[j][i]).append("\n");
             }
         }
         return sb.toString();
@@ -102,14 +102,14 @@ public class MatrixImpl implements Matrix {
     @Override
     public void printMatrix(boolean format) {
         System.out.println("Matrix: " + name);
-        for(int i  = 0; i < rowNum; i++){
+        for(int i  = 0; i < colNum; i++){
             if(format) System.out.println();
-            for(int j = 0; j < colNum; j++){
+            for(int j = 0; j < rowNum; j++){
                 if(format){
-                    System.out.print(matrix[i][j] + " ");
+                    System.out.print(matrix[j][i] + " ");
                     continue;
                 }
-                System.out.println(i + "," + j + " = " + matrix[i][j]);
+                System.out.println(j + "," + i + " = " + matrix[j][i]);
             }
         }
         if (format) System.out.println();
@@ -118,5 +118,9 @@ public class MatrixImpl implements Matrix {
     @Override
     public void setFile(Path file) {
         this.file = file;
+    }
+
+    public BigInteger[][] getMatrix() {
+        return matrix;
     }
 }

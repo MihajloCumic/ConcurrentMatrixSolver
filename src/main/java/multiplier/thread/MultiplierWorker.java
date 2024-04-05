@@ -28,6 +28,8 @@ public class MultiplierWorker extends RecursiveTask<Matrix> {
     @Override
     protected Matrix compute() {
         if(to - from <= LIMIT){
+            System.out.println("Range:");
+            System.out.println(from + " ,,, " + to);
             multiplyMatrixSegments();
         }else{
             //int mid = to % 2 == 0? to / 2 : (to / 2) + 1;

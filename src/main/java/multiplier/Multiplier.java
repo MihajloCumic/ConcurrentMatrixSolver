@@ -11,6 +11,6 @@ public abstract class Multiplier {
     public abstract void submitTask(PoisonPill poisonPill);
 
     public static Multiplier newMatrixMultiplier(MatrixBrain matrixBrain, int maxRowsSize){
-        return new MultiplierPool(matrixBrain, maxRowsSize);
+        return new MultiplierPool(matrixBrain, maxRowsSize, false);
     }
 }

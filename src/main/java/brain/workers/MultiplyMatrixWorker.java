@@ -47,10 +47,7 @@ public class MultiplyMatrixWorker implements Callable<Result> {
         MultiplyMatrixTask multiplyTask = new MultiplyMatrixTask(firstMatrix, secondMatrix, resultMatrix);
         taskQueue.addTask(multiplyTask);
         synchronized (multiplyTask){
-            System.out.println("Waiting");
             multiplyTask.wait();
-            System.out.println("Sleep");
-            Thread.sleep(5000);
         }
         return new MultiplyResult(firstMatrixName,  secondMatrixName, resultMatrixName);
     }
