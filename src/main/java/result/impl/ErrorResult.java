@@ -1,5 +1,6 @@
 package result.impl;
 
+import matrix.Matrix;
 import result.Result;
 
 public class ErrorResult implements Result {
@@ -22,7 +23,7 @@ public class ErrorResult implements Result {
     }
 
     @Override
-    public boolean resultContainsMatrix() {
+    public boolean resultContainsMatrix(Matrix matrix) {
         return false;
     }
 }

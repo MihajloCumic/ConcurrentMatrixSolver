@@ -35,7 +35,10 @@ public class InfoResult implements Result {
     }
 
     @Override
-    public boolean resultContainsMatrix() {
+    public boolean resultContainsMatrix(Matrix matrix) {
+        for(Matrix m: matrices){
+            if(m.getName().equals(matrix.getName())) return true;
+        }
         return false;
     }
 }

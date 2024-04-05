@@ -1,6 +1,8 @@
 package result;
 
+import matrix.Matrix;
+
 public interface Result {
     String resultAsString();
-    boolean resultContainsMatrix();
+    boolean resultContainsMatrix(Matrix matrix);
 }

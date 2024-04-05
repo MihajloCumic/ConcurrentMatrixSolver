@@ -1,5 +1,6 @@
 package result.impl;
 
+import matrix.Matrix;
 import result.Result;
 
 public class MultiplyResult implements Result {
@@ -23,8 +24,10 @@ public class MultiplyResult implements Result {
     }
 
     @Override
-    public boolean resultContainsMatrix() {
-        return false;
+    public boolean resultContainsMatrix(Matrix matrix) {
+        return matrix.getName().equals(firstMatrixName) ||
+                matrix.getName().equals(secondMatrixName) ||
+                matrix.getName().equals(resultMatrixName);
     }
 
     @Override

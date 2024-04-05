@@ -3,7 +3,10 @@ package brain.workers;
 import matrix.Matrix;
 import result.Result;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class ClearMatrixWorker implements Runnable{
@@ -20,7 +23,22 @@ public class ClearMatrixWorker implements Runnable{
     @Override
     public void run() {
         if(!matrices.containsKey(matrixName)) return;
+        Matrix matrix = matrices.get(matrixName);
         matrices.remove(matrixName);
+        List<String> keysToRemove = new ArrayList<>();
+        for(String key: results.keySet()){
+            try {
+                Result result = results.get(key).get();
+                if(result.resultContainsMatrix(matrix)) keysToRemove.add(key);
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        for(String key: keysToRemove){
+            System.out.println(key);
+            results.remove(key);
+        }
+
         //obrisati putanju of matrice iz system explorera da bi je opet ucitao
     }
 }
