@@ -46,7 +46,7 @@ public class MultiplierTest {
         MatrixImpl matrix3 = new MatrixImpl("rez", 2, 2);
         ForkJoinPool forkJoinPool = new ForkJoinPool();
         try {
-            Matrix result = forkJoinPool.submit(new MultiplierWorker(1, matrix1, matrix2, matrix3, 0 , 3)).get();
+            Matrix result = forkJoinPool.submit(new MultiplierWorker(1, matrix1, matrix2, matrix3,0 , 3)).get();
             result.printMatrix(false);
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);

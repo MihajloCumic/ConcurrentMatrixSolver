@@ -2,6 +2,7 @@ package multiplier.thread;
 
 import extractor.thread.ExtractorWorker;
 import matrix.Matrix;
+import matrix.impl.MatrixImpl;
 
 import java.math.BigInteger;
 import java.util.concurrent.RecursiveTask;
@@ -10,13 +11,12 @@ public class MultiplierWorker extends RecursiveTask<Matrix> {
     private final int LIMIT;
     private final Matrix firstMatrix;
     private final Matrix secondMatrix;
-
     private final Matrix resultMatrix;
 
     private int from;
     private int to;
 
-    public MultiplierWorker(int LIMIT, Matrix firstMatrix, Matrix secondMatrix, Matrix resultMatrix, int from, int to){
+    public MultiplierWorker(int LIMIT, Matrix firstMatrix, Matrix secondMatrix, Matrix resultMatrix,int from, int to){
         this.LIMIT = LIMIT;
         this.firstMatrix = firstMatrix;
         this.secondMatrix = secondMatrix;
@@ -28,19 +28,20 @@ public class MultiplierWorker extends RecursiveTask<Matrix> {
     @Override
     protected Matrix compute() {
         if(to - from <= LIMIT){
-            System.out.println("Range:");
-            System.out.println(from + " ,,, " + to);
             multiplyMatrixSegments();
+            return resultMatrix;
         }else{
             //int mid = to % 2 == 0? to / 2 : (to / 2) + 1;
             int mid = from + LIMIT;
-            MultiplierWorker left = new MultiplierWorker(LIMIT, firstMatrix, secondMatrix, resultMatrix, from, mid);
-            MultiplierWorker right = new MultiplierWorker(LIMIT, firstMatrix, secondMatrix, resultMatrix, mid, to);
+            MultiplierWorker left = new MultiplierWorker(LIMIT, firstMatrix, secondMatrix,  new MatrixImpl(resultMatrix.getName(), resultMatrix.getRowNumber(), resultMatrix.getColNumber()),from, mid);
+            MultiplierWorker right = new MultiplierWorker(LIMIT, firstMatrix, secondMatrix,  new MatrixImpl(resultMatrix.getName(), resultMatrix.getRowNumber(), resultMatrix.getColNumber()),mid, to);
 
             left.fork();
             right.fork();
-            left.join();
-            right.join();
+            Matrix leftMatrix = left.join();
+            Matrix rightMatrix = right.join();
+            resultMatrix.addMatrix(leftMatrix);
+            resultMatrix.addMatrix(rightMatrix);
         }
         return resultMatrix;
     }

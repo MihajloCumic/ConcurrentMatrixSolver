@@ -65,6 +65,16 @@ public class MatrixImpl implements Matrix {
     }
 
     @Override
+    public void addMatrix(Matrix matrix) {
+        if(matrix.getRowNumber() != rowNum && matrix.getColNumber() != colNum) return;
+        for(int i = 0; i < rowNum; i++){
+            for(int j = 0; j < colNum; j++){
+                this.matrix[i][j] = this.matrix[i][j].add(matrix.getElement(i, j));
+            }
+        }
+    }
+
+    @Override
     public int getRowNumber() {
         return rowNum;
     }
