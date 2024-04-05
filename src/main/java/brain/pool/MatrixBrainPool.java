@@ -73,6 +73,16 @@ public class MatrixBrainPool extends MatrixBrain {
     }
 
     @Override
+    public void getAllMatricesInRangeInfo(boolean fromStart, int to) {
+        try {
+            Result result =  executorService.submit(new FindAllMatricesInRangeWorker(matrices, fromStart, to)).get();
+            System.out.println(result.resultAsString());
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public Future<Result> multiplyMatricesBlocking(String firstMatrixName, String secondMatrixName, String resultMatrixName){
         String key = "mul"+firstMatrixName+secondMatrixName+resultMatrixName;
         if(resultCache.containsKey(key)){

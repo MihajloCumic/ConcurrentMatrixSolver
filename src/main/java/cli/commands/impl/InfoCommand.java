@@ -22,7 +22,16 @@ public class InfoCommand extends Command {
             return;
         }
         if(tokens.length == 3){
-            return;
+            if(tokens[1].equals("-s")){
+                int to = Integer.parseInt(tokens[2]);
+                matrixBrain.getAllMatricesInRangeInfo(true, to);
+                return;
+            }
+            if(tokens[1].equals("-e")){
+                int to = Integer.parseInt(tokens[2]);
+                matrixBrain.getAllMatricesInRangeInfo(false, to);
+                return;
+            }
         }
         System.out.println("Invalid command.");
 

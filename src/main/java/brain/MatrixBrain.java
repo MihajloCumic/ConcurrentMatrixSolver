@@ -17,6 +17,7 @@ public abstract class MatrixBrain {
     public abstract void clearMatrix(String matrixName);
     public abstract void getMatrixInfo(String matrixName);
     public abstract void getAllMatricesInfo();
+    public abstract void getAllMatricesInRangeInfo(boolean fromStart, int to);
     public abstract Future<Result> multiplyMatricesBlocking(String firstMatrixName, String secondMatrixName, String resultMatrixName);
     public abstract void multiplyMatricesAsync(String firstMatrixName, String secondMatrixName, String resultMatrixName);
     public abstract void shutdown();
