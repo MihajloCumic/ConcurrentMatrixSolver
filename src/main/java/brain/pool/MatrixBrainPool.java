@@ -8,7 +8,6 @@ import result.Result;
 import task.impl.PoisonPill;
 
 import java.nio.file.Path;
-import java.util.List;
 import java.util.concurrent.*;
 
 public class MatrixBrainPool extends MatrixBrain {
@@ -54,8 +53,13 @@ public class MatrixBrainPool extends MatrixBrain {
 
     }
     @Override
-    public Future<List<Matrix>> getMatrixInfo(){
-        return executorService.submit(new InfoMatrixWorker(matrices));
+    public void getMatrixInfo(String matrixName){
+        try {
+            Result result =  executorService.submit(new FindMatrixInfoWorker(matrixName, matrices)).get();
+            System.out.println(result.resultAsString());
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

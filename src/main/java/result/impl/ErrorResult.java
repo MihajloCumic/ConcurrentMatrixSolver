@@ -15,4 +15,14 @@ public class ErrorResult implements Result {
                 "errorMessage='" + errorMessage + '\'' +
                 '}';
     }
+
+    @Override
+    public String resultAsString() {
+        return errorMessage;
+    }
+
+    @Override
+    public boolean resultContainsMatrix() {
+        return false;
+    }
 }

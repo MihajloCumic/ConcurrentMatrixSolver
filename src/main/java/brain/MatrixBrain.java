@@ -15,7 +15,7 @@ public abstract class MatrixBrain {
     public abstract void updateMatrix(Matrix matrix);
     public abstract void saveMatrixInFile(String matrixName, Path file);
     public abstract void clearMatrix(String matrixName);
-    public abstract Future<List<Matrix>> getMatrixInfo();
+    public abstract void getMatrixInfo(String matrixName);
     public abstract Future<Result> multiplyMatricesBlocking(String firstMatrixName, String secondMatrixName, String resultMatrixName);
     public abstract void multiplyMatricesAsync(String firstMatrixName, String secondMatrixName, String resultMatrixName);
     public abstract void shutdown();
