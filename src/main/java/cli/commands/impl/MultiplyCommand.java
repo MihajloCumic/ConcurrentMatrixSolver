@@ -54,12 +54,8 @@ public class MultiplyCommand extends Command {
             matrixBrain.multiplyMatricesAsync(firstMatrixName, secondMatrixName, resultMatrixName);
             return;
         }
-        try {
-            Result result = matrixBrain.multiplyMatricesBlocking(firstMatrixName, secondMatrixName, resultMatrixName).get();
-            System.out.println(result.toString());
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
-        }
+        matrixBrain.multiplyMatricesBlocking(firstMatrixName, secondMatrixName, resultMatrixName);
+
 
     }
 }

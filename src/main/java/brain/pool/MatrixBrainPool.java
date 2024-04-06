@@ -38,13 +38,7 @@ public class MatrixBrainPool extends MatrixBrain {
 
     @Override
     public void saveMatrixInFile(String matrixName, Path file){
-        try {
-            String message = executorService.submit(new SaveFileWorker(matrixName, file, matrices)).get();
-            System.out.println(message);
-        } catch (InterruptedException | ExecutionException e) {
-            System.out.println("My message:");
-            System.out.println(e.getLocalizedMessage());
-        }
+        executorService.submit(new SaveFileWorker(matrixName, file, matrices));
     }
 
     @Override
@@ -83,21 +77,23 @@ public class MatrixBrainPool extends MatrixBrain {
     }
 
     @Override
-    public Future<Result> multiplyMatricesBlocking(String firstMatrixName, String secondMatrixName, String resultMatrixName){
+    public void multiplyMatricesBlocking(String firstMatrixName, String secondMatrixName, String resultMatrixName){
         String key = "mul"+firstMatrixName+secondMatrixName+resultMatrixName;
         if(resultCache.containsKey(key)){
             try {
                 Result result = resultCache.get(key).get();
-                System.out.println(resultCache.get(key).isDone());
-                System.out.println(result.toString());
-                return resultCache.get(key);
+                System.out.println(result);
             } catch (InterruptedException | ExecutionException e) {
                 throw new RuntimeException(e);
             }
         }
-        Future<Result> resultFuture = executorService.submit(new MultiplyMatrixWorker(taskQueue, matrices, resultCache,firstMatrixName, secondMatrixName, resultMatrixName));
-        resultCache.put(key, resultFuture);
-        return resultFuture;
+        try {
+            Future<Result> resultFuture = executorService.submit(new MultiplyMatrixWorker(taskQueue, matrices, resultCache,firstMatrixName, secondMatrixName, resultMatrixName));
+            resultCache.put(key, resultFuture);
+            System.out.println(resultFuture.get());
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
