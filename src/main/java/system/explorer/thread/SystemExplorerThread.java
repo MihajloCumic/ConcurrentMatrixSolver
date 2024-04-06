@@ -50,6 +50,12 @@ public class SystemExplorerThread extends SystemExplorer {
     }
 
     @Override
+    public void removePath(String path) {
+        Path file = Path.of(path);
+        fileFinder.removePathFromCache(file);
+    }
+
+    @Override
     public void stop(){
         run = false;
     }

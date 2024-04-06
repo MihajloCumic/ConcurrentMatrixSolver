@@ -7,6 +7,7 @@ import matrix.Matrix;
 import queue.TaskQueue;
 import result.Result;
 import result.impl.ErrorResult;
+import system.explorer.SystemExplorer;
 import task.impl.PoisonPill;
 
 import java.nio.file.Path;
@@ -44,8 +45,8 @@ public class MatrixBrainPool extends MatrixBrain {
     }
 
     @Override
-    public void clearMatrix(String matrixName){
-        executorService.submit(new ClearMatrixWorker(matrixName, matrices, resultCache));
+    public void clearMatrix(String matrix, SystemExplorer systemExplorer, boolean isMatrixName){
+        executorService.submit(new ClearMatrixWorker(matrix, isMatrixName,systemExplorer,matrices, resultCache));
 
     }
     @Override

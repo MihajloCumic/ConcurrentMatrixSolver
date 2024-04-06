@@ -51,7 +51,7 @@ public class CommandLineRunner implements Runner{
                 continue;
             }
             if(command.equals("clear")){
-                Command.newClearCommand(matrixBrain).execute(input);
+                Command.newClearCommand(matrixBrain, systemExplorer).execute(input);
                 continue;
             }
             if(command.equals("dir")){

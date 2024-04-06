@@ -39,7 +39,7 @@ public abstract class Command {
     }
     public static Command newSaveCommand(MatrixBrain matrixBrain){return new SaveCommand(matrixBrain);
     }
-    public static Command newClearCommand(MatrixBrain matrixBrain){return new ClearCommand(matrixBrain);
+    public static Command newClearCommand(MatrixBrain matrixBrain, SystemExplorer systemExplorer){return new ClearCommand(matrixBrain, systemExplorer);
     }
 
 }

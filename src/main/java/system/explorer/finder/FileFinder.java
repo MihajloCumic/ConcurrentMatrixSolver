@@ -49,4 +49,8 @@ public class FileFinder {
             throw new RuntimeException(e);
         }
     }
+
+    public void removePathFromCache(Path path){
+        fileCache.removePathFromCache(path);
+    }
 }

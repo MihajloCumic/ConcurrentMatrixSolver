@@ -1,5 +1,7 @@
 package system.explorer.cache;
 
+import logger.GlobalLogger;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,6 +33,13 @@ public class FileCache {
             return newTime.compareTo(oldTime) > 0;
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void removePathFromCache(Path path){
+        if(containsKey(path)){
+            lastModifiedCache.remove(path);
+            GlobalLogger.getInstance().logInfo("SE removed file: " + path);
         }
     }
 

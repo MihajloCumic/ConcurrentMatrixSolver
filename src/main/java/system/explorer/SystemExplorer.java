@@ -11,6 +11,7 @@ import java.nio.file.Path;
 public abstract class SystemExplorer implements Runnable{
     public abstract void stop();
     public abstract void addPath(String path) throws Exception;
+    public abstract void removePath(String path);
 
     public static SystemExplorer newSystemExplorer(String starterPath,TaskQueue taskQueue, long pause) throws Exception{
         FileFinder fileFinder = new FileFinder(".rix", new TaskCreator(taskQueue), new FileCache());

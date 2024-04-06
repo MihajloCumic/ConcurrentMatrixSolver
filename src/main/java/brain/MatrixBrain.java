@@ -4,6 +4,7 @@ import brain.pool.MatrixBrainPool;
 import matrix.Matrix;
 import queue.TaskQueue;
 import result.Result;
+import system.explorer.SystemExplorer;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -14,7 +15,7 @@ public abstract class MatrixBrain {
     public abstract void cacheMatrix(Matrix matrix);
     public abstract void updateMatrix(Matrix matrix);
     public abstract void saveMatrixInFile(String matrixName, Path file);
-    public abstract void clearMatrix(String matrixName);
+    public abstract void clearMatrix(String matrix, SystemExplorer systemExplorer, boolean matrixName);
     public abstract void getMatrixInfo(String matrixName);
     public abstract void getAllMatricesInfo();
     public abstract void getAllMatricesInRangeInfo(boolean fromStart, int to);
