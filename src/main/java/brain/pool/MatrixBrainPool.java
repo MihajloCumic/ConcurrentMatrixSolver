@@ -2,9 +2,11 @@ package brain.pool;
 
 import brain.MatrixBrain;
 import brain.workers.*;
+import logger.GlobalLogger;
 import matrix.Matrix;
 import queue.TaskQueue;
 import result.Result;
+import result.impl.ErrorResult;
 import task.impl.PoisonPill;
 
 import java.nio.file.Path;
@@ -50,7 +52,8 @@ public class MatrixBrainPool extends MatrixBrain {
     public void getMatrixInfo(String matrixName){
         try {
             Result result =  executorService.submit(new FindMatrixInfoWorker(matrixName, matrices)).get();
-            System.out.println(result.resultAsString());
+            if(result instanceof ErrorResult) GlobalLogger.getInstance().logError(result.resultAsString());
+            else GlobalLogger.getInstance().logInfo(result.resultAsString());
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
@@ -60,7 +63,8 @@ public class MatrixBrainPool extends MatrixBrain {
     public void getAllMatricesInfo() {
         try {
             Result result =  executorService.submit(new FindAllMatricesInfo(matrices)).get();
-            System.out.println(result.resultAsString());
+            if(result instanceof ErrorResult) GlobalLogger.getInstance().logError(result.resultAsString());
+            else GlobalLogger.getInstance().logInfo(result.resultAsString());
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
@@ -70,7 +74,8 @@ public class MatrixBrainPool extends MatrixBrain {
     public void getAllMatricesInRangeInfo(boolean fromStart, int to) {
         try {
             Result result =  executorService.submit(new FindAllMatricesInRangeWorker(matrices, fromStart, to)).get();
-            System.out.println(result.resultAsString());
+            if(result instanceof ErrorResult) GlobalLogger.getInstance().logError(result.resultAsString());
+            else GlobalLogger.getInstance().logInfo(result.resultAsString());
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
@@ -82,7 +87,8 @@ public class MatrixBrainPool extends MatrixBrain {
         if(resultCache.containsKey(key)){
             try {
                 Result result = resultCache.get(key).get();
-                System.out.println(result);
+                if(result instanceof ErrorResult) GlobalLogger.getInstance().logError(result.resultAsString());
+                else GlobalLogger.getInstance().logInfo(result.resultAsString());
             } catch (InterruptedException | ExecutionException e) {
                 throw new RuntimeException(e);
             }
@@ -90,7 +96,9 @@ public class MatrixBrainPool extends MatrixBrain {
         try {
             Future<Result> resultFuture = executorService.submit(new MultiplyMatrixWorker(taskQueue, matrices, resultCache,firstMatrixName, secondMatrixName, resultMatrixName));
             resultCache.put(key, resultFuture);
-            System.out.println(resultFuture.get());
+            Result result = resultFuture.get();
+            if(result instanceof ErrorResult) GlobalLogger.getInstance().logError(result.resultAsString());
+            else GlobalLogger.getInstance().logInfo(result.resultAsString());
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
@@ -103,11 +111,12 @@ public class MatrixBrainPool extends MatrixBrain {
             try {
                 Future<Result> resultFuture = resultCache.get(key);
                 if(resultFuture.isDone()){
-                    System.out.println("The multiplication is done");
-                    System.out.println(resultFuture.get().toString());
+                    Result result = resultFuture.get();
+                    if(result instanceof ErrorResult) GlobalLogger.getInstance().logError(result.resultAsString());
+                    else GlobalLogger.getInstance().logInfo("Multiplication is done -> " + result.resultAsString());
                     return;
                 }
-                System.out.println("Still multiplying.");
+                GlobalLogger.getInstance().logInfo("Still multiplying.");
                 return;
             } catch (InterruptedException | ExecutionException e) {
                 throw new RuntimeException(e);

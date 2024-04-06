@@ -2,6 +2,7 @@ package cli.commands.impl;
 
 import brain.MatrixBrain;
 import cli.commands.Command;
+import logger.GlobalLogger;
 import system.explorer.SystemExplorer;
 
 public class DirCommand extends Command {
@@ -14,11 +15,10 @@ public class DirCommand extends Command {
     @Override
     protected void execute(String[] tokens) {
         if(tokens.length != 2){
-            System.out.println("Invalid input.");
+            GlobalLogger.getInstance().logError("Invalid input for command " + tokens[0]);
             return;
         }
         try {
-            System.out.println("Callint with: " + tokens[1]);
             systemExplorer.addPath(tokens[1]);
         } catch (Exception e) {
             throw new RuntimeException(e);

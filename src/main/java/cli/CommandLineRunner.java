@@ -3,6 +3,7 @@ package cli;
 import brain.MatrixBrain;
 import brain.pool.MatrixBrainPool;
 import cli.commands.Command;
+import logger.GlobalLogger;
 import system.explorer.SystemExplorer;
 
 import java.io.BufferedReader;
@@ -29,7 +30,7 @@ public class CommandLineRunner implements Runner{
             String input = reader.readLine();
             String[] parts = input.split(" ");
             if(parts.length == 0){
-                System.out.println("No command.");
+                GlobalLogger.getInstance().logError("No command.");
                 continue;
             }
             String command = parts[0];
@@ -57,7 +58,7 @@ public class CommandLineRunner implements Runner{
                 Command.newDirCommand(matrixBrain, systemExplorer).execute(input);
                 continue;
             }
-            System.out.println("Invalid command: " + input);
+            GlobalLogger.getInstance().logError("Command " + parts[0] + "does not exist.");
         }
         System.out.println("Finished.");
     }

@@ -1,5 +1,6 @@
 package brain.workers;
 
+import logger.GlobalLogger;
 import matrix.Matrix;
 
 import java.io.IOException;
@@ -23,22 +24,23 @@ public class SaveFileWorker implements Runnable {
     @Override
     public void run() {
         if(!matrices.containsKey(matrixName)) {
-            System.out.println("No matrix of name: " + matrixName);
+            GlobalLogger.getInstance().logError("No matrix of name: " + matrixName);
             return;
         }
 
         Matrix matrix = matrices.get(matrixName);
         if(!matrix.getFilePath().equals("No file.")){
-            System.out.println("Matrix is already saved in: " + matrix.getFilePath());
+            GlobalLogger.getInstance().logInfo("Matrix is already saved in: " + matrix.getFilePath());
+            return;
         }
         String content = matrix.getMatrixContentAsString();
         Path newFile = Path.of(file + "/" + matrixName + ".rix");
         try {
             Files.write(newFile, content.getBytes(), StandardOpenOption.CREATE);
             matrix.setFile(file);
-            System.out.println("Matrix has been successfully saved in file: " + file);
+            GlobalLogger.getInstance().logInfo("Matrix has been successfully saved in file: " + file);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            GlobalLogger.getInstance().logError("Could not write to file: " + newFile);
         }
     }
 }

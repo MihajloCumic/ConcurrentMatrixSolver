@@ -3,6 +3,7 @@ package cli.commands.impl;
 import brain.MatrixBrain;
 import brain.pool.MatrixBrainPool;
 import cli.commands.Command;
+import logger.GlobalLogger;
 import matrix.Matrix;
 import result.Result;
 
@@ -33,7 +34,7 @@ public class InfoCommand extends Command {
                 return;
             }
         }
-        System.out.println("Invalid command.");
+        GlobalLogger.getInstance().logError("Invalid input for command " + tokens[0]);
 
     }
 

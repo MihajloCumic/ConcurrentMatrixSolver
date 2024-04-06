@@ -3,6 +3,7 @@ package cli.commands.impl;
 import brain.MatrixBrain;
 import brain.pool.MatrixBrainPool;
 import cli.commands.Command;
+import logger.GlobalLogger;
 
 import java.nio.file.Path;
 
@@ -15,7 +16,7 @@ public class SaveCommand extends Command {
     @Override
     protected void execute(String[] tokens) {
         if(tokens.length != 5){
-            System.out.println("Invalid input.");
+            GlobalLogger.getInstance().logError("Invalid input for command " + tokens[0]);
             return;
         }
         if(tokens[1].equals("-name") && tokens[3].equals("-file")){
@@ -24,6 +25,6 @@ public class SaveCommand extends Command {
             matrixBrain.saveMatrixInFile(matrixName, file);
             return;
         }
-        System.out.println("Invalid input.");
+        GlobalLogger.getInstance().logError("Invalid input for command " + tokens[0]);
     }
 }

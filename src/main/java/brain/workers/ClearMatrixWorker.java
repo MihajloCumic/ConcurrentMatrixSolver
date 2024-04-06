@@ -1,5 +1,6 @@
 package brain.workers;
 
+import logger.GlobalLogger;
 import matrix.Matrix;
 import result.Result;
 
@@ -22,7 +23,10 @@ public class ClearMatrixWorker implements Runnable{
 
     @Override
     public void run() {
-        if(!matrices.containsKey(matrixName)) return;
+        if(!matrices.containsKey(matrixName)) {
+            GlobalLogger.getInstance().logError("Matrix with name: " + matrixName + " does not exist.");
+            return;
+        }
         Matrix matrix = matrices.get(matrixName);
         matrices.remove(matrixName);
         List<String> keysToRemove = new ArrayList<>();
@@ -35,7 +39,6 @@ public class ClearMatrixWorker implements Runnable{
             }
         }
         for(String key: keysToRemove){
-            System.out.println(key);
             results.remove(key);
         }
 

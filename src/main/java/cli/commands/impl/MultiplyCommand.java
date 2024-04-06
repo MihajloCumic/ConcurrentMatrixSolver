@@ -3,6 +3,7 @@ package cli.commands.impl;
 import brain.MatrixBrain;
 import brain.pool.MatrixBrainPool;
 import cli.commands.Command;
+import logger.GlobalLogger;
 import result.Result;
 
 import java.util.concurrent.ExecutionException;
@@ -14,7 +15,10 @@ public class MultiplyCommand extends Command {
     }
     @Override
     protected void execute(String[] tokens) {
-        if(tokens.length < 3 || tokens.length > 6) System.out.println("Invalid input");
+        if(tokens.length < 3 || tokens.length > 6) {
+            GlobalLogger.getInstance().logError("Invalid input for command " + tokens[0]);
+            return;
+        }
         boolean async = false;
         String firstMatrixName = tokens[1];
         String secondMatrixName = tokens[2];
@@ -23,7 +27,7 @@ public class MultiplyCommand extends Command {
             if(tokens[3].equals("-name")){
                 resultMatrixName = tokens[4];
             }else {
-                System.out.println("Invalid input.");
+                GlobalLogger.getInstance().logError("Invalid input for command " + tokens[0]);
                 return;
             }
         }
@@ -31,7 +35,7 @@ public class MultiplyCommand extends Command {
             if(tokens[3].equals("-async")){
                 async = true;
             }else {
-                System.out.println("Invalid input.");
+                GlobalLogger.getInstance().logError("Invalid input for command " + tokens[0]);
                 return;
             }
         }
@@ -39,13 +43,13 @@ public class MultiplyCommand extends Command {
             if(tokens[3].equals("-name")){
                 resultMatrixName = tokens[4];
             }else {
-                System.out.println("InvalidInput");
+                GlobalLogger.getInstance().logError("Invalid input for command " + tokens[0]);
                 return;
             }
             if(tokens[5].equals("-async")){
                 async = true;
             }else {
-                System.out.println("Invalid input");
+                GlobalLogger.getInstance().logError("Invalid input for command " + tokens[0]);
                 return;
             }
         }
