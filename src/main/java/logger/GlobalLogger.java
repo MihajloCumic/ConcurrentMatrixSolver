@@ -1,15 +1,18 @@
 package logger;
 
+import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class GlobalLogger {
     private static GlobalLogger instance;
-    private final Logger logger;
+    private final String ANSI_RESET = "\u001B[0m";
+    private final String ANSI_RED = "\u001B[31m";
+    private final String ANSI_GREEN = "\u001B[32m";
+
 
     private GlobalLogger() {
-        this.logger = Logger.getLogger(GlobalLogger.class.getName());
-        logger.setLevel(Level.INFO);
     }
 
     public static synchronized GlobalLogger getInstance(){
@@ -18,10 +21,10 @@ public class GlobalLogger {
     }
 
     public void logInfo(String message){
-        logger.info(message);
+        System.out.println(message);
     }
 
     public void logError(String message){
-        logger.severe(message);
+        System.out.println(ANSI_RED + "Error:" + ANSI_RESET + " " + message);
     }
 }

@@ -1,8 +1,10 @@
 package system.explorer.thread;
 
+import logger.GlobalLogger;
 import system.explorer.SystemExplorer;
 import system.explorer.finder.FileFinder;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.List;
@@ -38,7 +40,13 @@ public class SystemExplorerThread extends SystemExplorer {
     @Override
     public void addPath(String path) throws Exception {
         System.out.println("Adding new dir.");
-        paths.add(Path.of(path));
+        Path dir = Path.of(path);
+        if(!Files.exists(dir)){
+            GlobalLogger.getInstance().logError("Directory: " + path + " does not exist.");
+            GlobalLogger.getInstance().logInfo("Directory: " + path + " does not exist.");
+            return;
+        }
+        paths.add(dir);
     }
 
     @Override
