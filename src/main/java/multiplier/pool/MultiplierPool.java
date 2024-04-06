@@ -2,6 +2,7 @@ package multiplier.pool;
 
 import brain.MatrixBrain;
 import brain.pool.MatrixBrainPool;
+import logger.GlobalLogger;
 import matrix.Matrix;
 import multiplier.Multiplier;
 import multiplier.thread.MultiplierWorker;
@@ -49,6 +50,6 @@ public class MultiplierPool extends Multiplier {
     @Override
     public void submitTask(PoisonPill poisonPill) {
         forkJoinPool.shutdown();
-        System.out.println("Extractor shutdown.");
+        GlobalLogger.getInstance().logError("MultiplierPool has shutdown.");
     }
 }

@@ -4,6 +4,7 @@ import brain.MatrixBrain;
 import brain.pool.MatrixBrainPool;
 import extractor.Extractor;
 import extractor.thread.ExtractorWorker;
+import logger.GlobalLogger;
 import matrix.Matrix;
 import matrix.impl.MatrixImpl;
 import task.impl.CreateMatrixTask;
@@ -47,7 +48,7 @@ public class ExtractorPool extends Extractor {
     @Override
     public void submitTask(PoisonPill poisonPill){
         executorService.shutdown();
-        System.out.println("Extractor pool shutdown.");
+        GlobalLogger.getInstance().logInfo("Extractor pool shutdown.");
     }
     private Matrix extraxtMatrix(Path file){
         int numberOfJobs = divideTask(file);

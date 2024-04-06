@@ -20,7 +20,6 @@ public class TaskCoordinator{
         this.multiplier = multiplier;
     }
     public void delegateTask(Task task) {
-        System.out.println("Delegate: " + task);
         if(task instanceof CreateMatrixTask createMatrixTask) extractor.submitTask(createMatrixTask);
         if(task instanceof UpdateMatrixTask updateMatrixTask) extractor.submitTask(updateMatrixTask);
         if(task instanceof MultiplyMatrixTask multiplyMatrixTask) multiplier.submitTask(multiplyMatrixTask);

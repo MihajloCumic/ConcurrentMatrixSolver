@@ -2,6 +2,7 @@ package coordinator.thread;
 
 import coordinator.Coordinator;
 import coordinator.delegator.TaskCoordinator;
+import logger.GlobalLogger;
 import queue.TaskQueue;
 import task.Task;
 import task.type.TaskType;
@@ -27,6 +28,6 @@ public class CoordinatorThread extends Coordinator {
                 throw new RuntimeException(e);
             }
         }
-        System.out.println("Task coordinator shutdown.");
+        GlobalLogger.getInstance().logInfo("Task coordinator shutdown.");
     }
 }

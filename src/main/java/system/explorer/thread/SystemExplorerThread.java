@@ -34,18 +34,18 @@ public class SystemExplorerThread extends SystemExplorer {
                 throw new RuntimeException(e);
             }
         }
-        System.out.println("System Explorer stopped.");
+        GlobalLogger.getInstance().logInfo("SystemExplorer has stopped.");
     }
 
     @Override
     public void addPath(String path) throws Exception {
-        System.out.println("Adding new dir.");
         Path dir = Path.of(path);
         if(!Files.exists(dir)){
             GlobalLogger.getInstance().logError("Directory: " + path + " does not exist.");
             GlobalLogger.getInstance().logInfo("Directory: " + path + " does not exist.");
             return;
         }
+        GlobalLogger.getInstance().logInfo("Adding new dir: " + path);
         paths.add(dir);
     }
 

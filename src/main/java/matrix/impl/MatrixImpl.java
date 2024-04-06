@@ -1,5 +1,6 @@
 package matrix.impl;
 
+import logger.GlobalLogger;
 import matrix.Matrix;
 
 import java.io.IOException;
@@ -46,13 +47,16 @@ public class MatrixImpl implements Matrix {
         try(Stream<String> lineStream = Files.lines(file)) {
             firstLine = lineStream.limit(1).toList().get(0);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            GlobalLogger.getInstance().logError(e.getLocalizedMessage());
         }
-        String[] parts = firstLine.split(",");
-        name = parts[0].trim().split("=")[1];
-        rowNum = Integer.parseInt(parts[1].trim().split("=")[1]);
-        colNum = Integer.parseInt(parts[2].trim().split("=")[1]);
-
+        try {
+            String[] parts = firstLine.split(",");
+            name = parts[0].trim().split("=")[1];
+            rowNum = Integer.parseInt(parts[1].trim().split("=")[1]);
+            colNum = Integer.parseInt(parts[2].trim().split("=")[1]);
+        }catch (Exception e){
+            GlobalLogger.getInstance().logError(e.getLocalizedMessage());
+        }
     }
     @Override
     public BigInteger getElement(int row, int col) {

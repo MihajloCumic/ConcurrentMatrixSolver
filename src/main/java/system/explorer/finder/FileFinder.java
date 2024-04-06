@@ -1,5 +1,6 @@
 package system.explorer.finder;
 
+import logger.GlobalLogger;
 import system.explorer.cache.FileCache;
 import system.explorer.creator.TaskCreator;
 
@@ -31,13 +32,13 @@ public class FileFinder {
                     .filter(path -> path.toString().toLowerCase().endsWith(extensionToFind))
                     .forEach(path -> {
                             if(!fileCache.containsKey(path)){
-                                System.out.println("Found new file: " + path);
+                                GlobalLogger.getInstance().logInfo("Found new file: " + path);
                                 fileCache.put(path);
                                 taskCreator.createAndSendCreateTask(path);
                                 return;
                             }
                             if(fileCache.wasModified(path)){
-                                System.out.println("Found modified file: " + path);
+                                GlobalLogger.getInstance().logInfo("Found modified file: " + path);
                                 fileCache.put(path);
                                 taskCreator.createAndSendUpdateTask(path);
                             }
