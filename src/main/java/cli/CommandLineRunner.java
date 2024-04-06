@@ -53,6 +53,10 @@ public class CommandLineRunner implements Runner{
                 Command.newClearCommand(matrixBrain).execute(input);
                 continue;
             }
+            if(command.equals("dir")){
+                Command.newDirCommand(matrixBrain, systemExplorer).execute(input);
+                continue;
+            }
             System.out.println("Invalid command: " + input);
         }
         System.out.println("Finished.");

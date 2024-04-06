@@ -10,25 +10,22 @@ import java.util.stream.Stream;
 
 public class FileFinder {
 
-    private final Path starterPath;
     private final String extensionToFind;
     private final TaskCreator taskCreator;
     private final FileCache fileCache;
 
 
-    public FileFinder(String starterPath, String extensionToFind, TaskCreator taskCreator, FileCache fileCache){
-        this.starterPath = Path.of(starterPath);
+    public FileFinder(String extensionToFind, TaskCreator taskCreator, FileCache fileCache){
         this.extensionToFind = extensionToFind;
         this.taskCreator = taskCreator;
         this.fileCache = fileCache;
     }
 
-    public void findFiles(){
+    public void findFiles(Path starterPath){
         try(Stream<Path> filePath = Files.walk(starterPath)) {
              filePath
                     .filter(path -> {
                         boolean isDirectory = Files.isDirectory(path);
-//                        if(isDirectory) System.out.println("Searching folder: " + path.getFileName());
                         return !isDirectory;
                     })
                     .filter(path -> path.toString().toLowerCase().endsWith(extensionToFind))

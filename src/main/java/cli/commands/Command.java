@@ -34,6 +34,9 @@ public abstract class Command {
     public static Command newStopCommand(MatrixBrain matrixBrain, SystemExplorer systemExplorer){
         return new StopCommand(matrixBrain, systemExplorer);
     }
+    public static Command newDirCommand(MatrixBrain matrixBrain, SystemExplorer systemExplorer){
+        return new DirCommand(matrixBrain, systemExplorer);
+    }
     public static Command newSaveCommand(MatrixBrain matrixBrain){return new SaveCommand(matrixBrain);
     }
     public static Command newClearCommand(MatrixBrain matrixBrain){return new ClearCommand(matrixBrain);

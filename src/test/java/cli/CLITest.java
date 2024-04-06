@@ -31,7 +31,7 @@ public class CLITest {
         String extension = ".rix";
         TaskCreator taskCreator = new TaskCreator(taskQueue);
         FileCache fileCache = new FileCache();
-        Thread systemExplorer = new Thread(new SystemExplorerThread(new FileFinder(starterPath, extension, taskCreator, fileCache), 5000));
+        Thread systemExplorer = new Thread(new SystemExplorerThread(null,new FileFinder( extension, taskCreator, fileCache), 5000));
         systemExplorer.start();
 
         CommandLineRunner cli = new CommandLineRunner(matrixBrainPool, null);
