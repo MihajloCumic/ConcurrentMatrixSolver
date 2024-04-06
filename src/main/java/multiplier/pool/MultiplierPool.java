@@ -20,7 +20,6 @@ public class MultiplierPool extends Multiplier {
     private final boolean test;
 
     public MultiplierPool(MatrixBrain matrixBrain, int maxRowsSize, boolean test) {
-
         this.matrixBrain = matrixBrain;
         this.maxRowsSize = maxRowsSize;
         this.test = test;
