@@ -129,8 +129,16 @@ public class MatrixBrainPool extends MatrixBrain {
 
     @Override
     public void shutdown(){
-        taskQueue.addTask(new PoisonPill());
-        executorService.shutdown();
+        PoisonPill poisonPill = new PoisonPill();
+        taskQueue.addTask(poisonPill);
+        synchronized (poisonPill){
+            try {
+                poisonPill.wait();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            executorService.shutdown();
+        }
         System.out.println("Matrix Brain shutdown");
     }
 

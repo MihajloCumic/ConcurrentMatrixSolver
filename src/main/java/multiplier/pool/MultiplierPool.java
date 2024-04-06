@@ -50,6 +50,6 @@ public class MultiplierPool extends Multiplier {
     @Override
     public void submitTask(PoisonPill poisonPill) {
         forkJoinPool.shutdown();
-        GlobalLogger.getInstance().logError("MultiplierPool has shutdown.");
+        GlobalLogger.getInstance().logInfo("MultiplierPool has shutdown.");
     }
 }

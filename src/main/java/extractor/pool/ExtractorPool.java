@@ -48,6 +48,9 @@ public class ExtractorPool extends Extractor {
     @Override
     public void submitTask(PoisonPill poisonPill){
         executorService.shutdown();
+        synchronized (poisonPill){
+            poisonPill.notify();
+        }
         GlobalLogger.getInstance().logInfo("Extractor pool shutdown.");
     }
     private Matrix extraxtMatrix(Path file){
