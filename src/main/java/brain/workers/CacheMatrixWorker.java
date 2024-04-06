@@ -1,5 +1,6 @@
 package brain.workers;
 
+import logger.GlobalLogger;
 import matrix.Matrix;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,7 +17,10 @@ public class CacheMatrixWorker implements Runnable{
     }
     @Override
     public void run() {
-        if(matrices.containsKey(matrix.getName())) return;
+        if(matrices.containsKey(matrix.getName())) {
+            GlobalLogger.getInstance().logError("MB matrix " + matrix.getName() + " already exists.");
+            return;
+        }
         matrices.putIfAbsent(matrix.getName(), matrix);
     }
 }

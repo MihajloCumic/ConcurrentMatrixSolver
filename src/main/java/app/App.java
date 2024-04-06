@@ -5,6 +5,7 @@ import cli.CommandLineRunner;
 import cli.Runner;
 import coordinator.Coordinator;
 import extractor.Extractor;
+import logger.GlobalLogger;
 import multiplier.Multiplier;
 import properties.Loader;
 import properties.impl.PropertiesLoader;
@@ -32,6 +33,7 @@ public class App {
 
             coordinator.join();
             systemExplorerThread.join();
+            GlobalLogger.getInstance().logInfo("Finished");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

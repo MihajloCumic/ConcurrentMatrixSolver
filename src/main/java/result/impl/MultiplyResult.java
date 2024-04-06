@@ -20,7 +20,7 @@ public class MultiplyResult implements Result {
 
     @Override
     public String resultAsString() {
-        return null;
+        return "Result: " + firstMatrixName + " * " + secondMatrixName +  " = " + resultMatrixName;
     }
 
     @Override

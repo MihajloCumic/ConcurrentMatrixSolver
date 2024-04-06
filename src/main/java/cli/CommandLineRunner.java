@@ -60,7 +60,6 @@ public class CommandLineRunner implements Runner{
             }
             GlobalLogger.getInstance().logError("Command " + parts[0] + "does not exist.");
         }
-        System.out.println("Finished.");
     }
 
 }

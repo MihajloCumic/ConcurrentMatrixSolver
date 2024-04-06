@@ -37,7 +37,7 @@ public class SaveFileWorker implements Runnable {
         Path newFile = Path.of(file + "/" + matrixName + ".rix");
         try {
             Files.write(newFile, content.getBytes(), StandardOpenOption.CREATE);
-            matrix.setFile(file);
+            matrix.setFile(newFile);
             GlobalLogger.getInstance().logInfo("Matrix has been successfully saved in file: " + file);
         } catch (IOException e) {
             GlobalLogger.getInstance().logError("Could not write to file: " + newFile);
