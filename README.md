@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Matrix Solver system is designed to support the multiplication of pre-defined matrices of arbitrary sizes. This operation should be performed concurrently, with the ability to add new matrices as well as view the results of individual matrices and display all matrices.
+The Matrix Solver system is designed to support the multiplication of pre-defined matrices of arbitrary sizes. This operation is performed concurrently, with the ability to add new matrices as well as view the results of individual matrices and display all matrices.
 
 ### System Parameters
 - The system must operate concurrently.
